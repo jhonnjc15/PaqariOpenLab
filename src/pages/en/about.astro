@@ -2,6 +2,7 @@
 import PageHeader from "@components/PageHeader.astro";
 import Shape from "@components/Shape.astro";
 import CounterComponent from "@components/about/CounterComponent.astro";
+import BackgroundVideo from "@components/BackgroundVideo.astro";
 import Gallery from "@components/about/Gallery.astro";
 import OurMembers from "@components/about/OurMembers.astro";
 import Works from "@components/about/Works.astro";
@@ -14,6 +15,7 @@ const page_data = {
   ...about.data,
   content: about.body,
 };
+const video_path = "/images/background-video.mp4"
 ---
 
 <Base
@@ -22,18 +24,7 @@ const page_data = {
   description={about.data.description}
   image={about.data.image}
 >
-  <video
-    autoplay
-    
-    muted
-    class="absolute -z-50 opacity-50 top-0 w-auto min-w-full min-h-full max-w-none"
-  >
-    <source
-      src="/images/background-video.mp4"
-      type="video/mp4"
-    />
-    Your browser does not support the video tag.
-  </video>
+  <BackgroundVideo src={video_path}/>
   <section class="page-hero py-16">
     <div class="container">
       <span class="w-4/12 lg:w-2/12 aspect-square bg-gradient-to-tr from-secondary to-green-400 absolute -top-5 lg:left-0 rounded-full skew-y-12 blur-2xl opacity-40 skew-x-12 rotate-90"></span>
@@ -48,10 +39,7 @@ const page_data = {
       */}
       <!-- benifit -->
       <!-- gellary -->
-      {/* 
       <Gallery gallery={gallery} />
-      */}
-      
       <!-- our works -->
       <Works features={features} />
       <!-- our members -->
