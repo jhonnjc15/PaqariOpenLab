@@ -1,7 +1,7 @@
 {
-  "name": "pinwheel-astro",
+  "name": "paqari-open-lab-astro",
   "version": "1.0.0",
-  "author": "themefisher",
+  "author": "JhonatanJC",
   "license": "MIT",
   "packageManager": "yarn@1.22.19",
   "scripts": {
