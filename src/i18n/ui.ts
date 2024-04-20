@@ -1,5 +1,5 @@
-import PeruFlag from '@partials/flags/Peru.astro';
-import UnitedStatesFlag from '@layouts/partials/flags/UnitedStates.astro';
+import PeruFlag from '@layouts/partials/Header/flags/Peru.astro';
+import UnitedStatesFlag from '@layouts/partials/Header/flags/UnitedStates.astro';
 // Add missing imports
 export const LANGUAGES: Record<
 	string,
