@@ -73,8 +73,7 @@ const product_folder_category = `${config.settings.product_folder}/${category}`
       <PageHeader page_data={page_data} />
     </div>
   </section>
-  <section class="section">
-    <div class="container">
+  <section class="border border-red-700 section mx-4 md:mx-10 lg:mx-20 mt-12">
       <ProductsList products={currentPosts} />
       <Pagination
 const product_folder_category = `${config.settings.product_folder}/${category}` 
@@ -82,6 +81,5 @@ const product_folder_category = `${config.settings.product_folder}/${category}`
         totalPages={totalPages}
         currentPage={currentPage}
       />
-    </div>
   </section>
 </Base>

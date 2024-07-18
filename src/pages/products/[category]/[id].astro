@@ -38,13 +38,12 @@ const data_by_id: unknown = await getEntryBySlug<any, string>(
 const { title, meta_title, description, image } = (data_by_id as any)?.data || {};
 
 ---
-
 <Base
   title={title}
   meta_title={meta_title}
   description={description}
   image={image}
 >
-
+  
   { (data_by_id as any)?.data?.description }
 </Base>

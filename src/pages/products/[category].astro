@@ -9,7 +9,7 @@ import Shape from "@components/Shape.astro";
 import Base from "@layouts/Base.astro";
 import Faq from "@layouts/function-components/Faq.jsx";
 import { getEntryBySlug } from "astro:content";
-import ProductsExperiences from "@components/products/ProductsExperiences.astro"
+import ProductsExperiences from "@components/products/ProductsExperiencesHome.astro"
 
 import ProductsList from "@components/products/ProductsList.astro";
 import Blogs from "@components/Blogs.astro";
@@ -103,13 +103,14 @@ const product_folder_category = `${product_folder}/${category_by_name.category_n
     </div>
   </section>
   <!-- products -->
-  <section class="border border-red-700 section mt-12 pt-0 mx-10">
+  <section class="border border-red-700 section mx-4 md:mx-10 lg:mx-20 mt-12">
     <ProductsList products={currentPosts} />
     <Pagination
       section={product_folder_category}
       currentPage={1}
       totalPages={totalPages}
     />
+
   </section>
   {/*
   <Faq client:load data={products.data} />
