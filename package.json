@@ -23,6 +23,7 @@
     "github-slugger": "^2.0.0",
     "gray-matter": "^4.0.3",
     "marked": "^4.3.0",
+    "photoswipe": "^5.4.4",
     "react-feather": "^2.0.10",
     "react-hook-form": "^7.51.3",
     "react-icons": "^4.12.0",

@@ -7,6 +7,7 @@ import BlogSingle from "@layouts/BlogSingle.astro";
 import { getSinglePage } from "@lib/contentParser.astro";
 import Blockquotek from "@shortcodes/Blockquote";
 import { getEntryBySlug } from "astro:content";
+import ProductPage from "@components/products/ProductPage.astro";
 
 interface Product {
   data: {
@@ -44,6 +45,8 @@ const { title, meta_title, description, image } = (data_by_id as any)?.data || {
   description={description}
   image={image}
 >
-  
-  { (data_by_id as any)?.data?.description }
+
+  <section class="border border-red-700 section mx-4 md:mx-10 lg:mx-20 mt-12">
+    <ProductPage data_by_id={data_by_id}/>
+  </section>
 </Base>
