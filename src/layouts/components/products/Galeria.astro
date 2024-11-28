@@ -1,31 +1,38 @@
 ---
 import "photoswipe/photoswipe.css"
+
+const { id_product } = Astro.props;
+
+console.log(id_product)
+
+const allImages = Object.keys(import.meta.glob('/public/images/products/*/*'));
+const images = allImages.filter(
+  (image) => image.includes(`/products/${id_product}/`) && !image.includes(`product-${id_product}-1.jpg`)
+);
 ---
 
-<div class="grid grid-col-3" id="galery">
-    <a href="https://cdn.photoswipe.com/photoswipe-demo-images/photos/2/img-2500.jpg" 
-    data-pswp-width="1669" 
-    data-pswp-height="2500" 
-    target="_blank">
-    <img src="https://cdn.photoswipe.com/photoswipe-demo-images/photos/2/img-200.jpg" alt="" />
+<div class="flex flex-col gap-6 lg:w-2/4" id="galery">
+  <!-- Imagen fija (siempre product-1-1.jpg) -->
+  <a href={`/images/products/${id_product}/product-${id_product}-1.jpg`}
+    data-pswp-width="1280" 
+    data-pswp-height="1280" 
+    target="_blank"
+  >
+    <img src={`/images/products/${id_product}/product-${id_product}-1.jpg`} class="w-full h-full aspect-square object-cover rounded-xl"  alt="" />
   </a>
-  <!-- cropped thumbnail: -->
-  <a href="https://cdn.photoswipe.com/photoswipe-demo-images/photos/7/img-2500.jpg" 
-    data-pswp-width="1875" 
-    data-pswp-height="2500" 
-    data-cropped="true" 
-    target="_blank">
-    <img src="https://cdn.photoswipe.com/photoswipe-demo-images/photos/7/img-200.jpg" alt="" />
-    Cropped
-  </a>
-  <!-- data-pswp-src with custom URL in href -->
-  <a href="https://unsplash.com" 
-    data-pswp-src="https://cdn.photoswipe.com/photoswipe-demo-images/photos/3/img-2500.jpg"
-    data-pswp-width="2500" 
-    data-pswp-height="1666" 
-    target="_blank">
-    <img src="https://cdn.photoswipe.com/photoswipe-demo-images/photos/3/img-200.jpg" alt="" />
-  </a>
+
+  <!-- Galería dinámica (desde la segunda imagen en adelante) -->
+  <div class="flex justify-between h-24">
+    {images.map((image, i) => (
+      <a href={image.replace('/public', '')}
+        data-pswp-width="1280" 
+        data-pswp-height="1280" 
+        target="_blank"
+      >
+        <img src={image.replace('/public', '')} class="w-24 h-24 rounded-md cursor-pointer" alt="" />
+      </a>
+    ))}
+  </div>
 </div>
 
 <script>
