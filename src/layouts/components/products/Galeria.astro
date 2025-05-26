@@ -44,5 +44,10 @@ const images = allImages.filter(
         pswpModule: () => import("photoswipe")
     })
 
-    lightbox.init()
+    //revisar
+    document.addEventListener(
+        'astro:page-load',
+        () => { if (lightbox) lightbox.init() },
+        { once: false },
+      )
 </script>
