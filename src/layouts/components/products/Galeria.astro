@@ -1,53 +1,85 @@
 ---
-import "photoswipe/photoswipe.css"
+// Parte del servidor (Astro)
+import "photoswipe/style.css";
 
 const { id_product } = Astro.props;
 
-console.log(id_product)
-
 const allImages = Object.keys(import.meta.glob('/public/images/products/*/*'));
-const images = allImages.filter(
-  (image) => image.includes(`/products/${id_product}/`) && !image.includes(`product-${id_product}-1.jpg`)
-);
+const images = allImages
+  .filter(img => img.includes(`/products/${id_product}/`))
+  .map(img => ({
+    src: img.replace('/public', ''),
+    isMain: img.includes(`product-${id_product}-1.jpg`) || img.includes('product.jpg')
+  }));
+
+const mainImage = images.find(img => img.isMain);
+const galleryImages = images.filter(img => !img.isMain);
 ---
 
 <div class="flex flex-col gap-6 lg:w-2/4" id="galery">
-  <!-- Imagen fija (siempre product-1-1.jpg) -->
-  <a href={`/images/products/${id_product}/product-${id_product}-1.jpg`}
-    data-pswp-width="1280" 
-    data-pswp-height="1280" 
-    target="_blank"
-  >
-    <img src={`/images/products/${id_product}/product-${id_product}-1.jpg`} class="w-full h-full aspect-square object-cover rounded-xl"  alt="" />
-  </a>
+  {mainImage && (
+    <a 
+      href={mainImage.src}
+      data-pswp-width="400"
+      data-pswp-height="400"
+    >
+      <img
+        src={mainImage.src}
+        class="w-full h-full aspect-square object-contain rounded-xl"
+        alt=""
+      />
+    </a>
+  )}
 
-  <!-- Galería dinámica (desde la segunda imagen en adelante) -->
   <div class="flex justify-between h-24">
-    {images.map((image, i) => (
-      <a href={image.replace('/public', '')}
-        data-pswp-width="1280" 
-        data-pswp-height="1280" 
-        target="_blank"
+    {galleryImages.map((image) => (
+      <a 
+        href={image.src}
+        data-pswp-width="400"
+        data-pswp-height="400"
       >
-        <img src={image.replace('/public', '')} class="w-24 h-24 rounded-md cursor-pointer" alt="" />
+        <img 
+          src={image.src}
+          class="w-24 h-24 rounded-md cursor-pointer object-contain"
+          alt=""
+        />
       </a>
     ))}
   </div>
 </div>
 
 <script>
-    import PhotoSwipeLightbox from "photoswipe/lightbox"
+  async function getImageSize(src) {
+    return new Promise((resolve) => {
+      const img = new Image();
+      img.src = src;
+      img.onload = () => {
+        resolve({ width: img.naturalWidth, height: img.naturalHeight });
+      };
+    });
+  }
+
+  document.addEventListener("astro:page-load", async () => {
+    const anchors = document.querySelectorAll("#galery a");
+
+    for (const a of anchors) {
+      const img = a.querySelector("img");
+      if (img) {
+        const { width, height } = await getImageSize(img.src);
+        a.dataset.pswpWidth = width;
+        a.dataset.pswpHeight = height;
+      }
+    }
+
+    const { default: PhotoSwipeLightbox } = await import("photoswipe/lightbox");
 
     const lightbox = new PhotoSwipeLightbox({
-        gallery: "#galery",
-        children: "a",
-        pswpModule: () => import("photoswipe")
-    })
+      gallery: "#galery",
+      children: "a",
+      pswpModule: () => import("photoswipe"),
+      hideAnimationDuration: 150,
+    });
 
-    //revisar
-    document.addEventListener(
-        'astro:page-load',
-        () => { if (lightbox) lightbox.init() },
-        { once: false },
-      )
+    lightbox.init();
+  });
 </script>
