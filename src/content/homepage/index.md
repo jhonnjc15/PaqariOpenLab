@@ -1,6 +1,6 @@
 ---
 banner:
-  title: "Escala las operaciones de diseño y desarrollo con Avocode Enterpriseee"
+  title: "Escala las operaciones de diseño y desarrollo con Avocode Enterprise"
   content: "Una suite completamente integrada de productos de autenticación y autorización, la plataforma de Stytch elimina el dolor de cabeza de."
   image: /images/banner-img.png
   button:
