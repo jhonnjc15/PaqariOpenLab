@@ -8,6 +8,8 @@ import { getSinglePage } from "@lib/contentParser.astro";
 import Blockquotek from "@shortcodes/Blockquote";
 import { getEntryBySlug } from "astro:content";
 import ProductPage from "@components/products/ProductPage.astro";
+import products from "@data/products.json"; // Asegúrate que tienes esto en tsconfig `paths`
+
 
 interface Product {
   data: {
@@ -18,24 +20,30 @@ interface Product {
 
 
 export async function getStaticPaths() {
-  const all_products: unknown[] = await getSinglePage(config.settings.product_folder);
-  const allProducts = all_products.map((product: unknown) => ({
+  return products.map((product) => ({
     params: {
-      id: (product as Product).data?.id_product || '',
-      category: (product as Product).data?.category || ''
+      id: product.id_product,
+      category: product.category
     }
   }));
-  return allProducts;
 }
 
 const { category, id } = Astro.params;
 
+console.log(category)
+console.log(id)
+console.log('products')
+console.log(products)
 
-const data_by_id: unknown = await getEntryBySlug<any, string>(
-  config.settings.product_folder,
-  `product-${id}`
+const data_by_id = products.find(
+  (product) =>
+    String(product.id_product) === String(id) &&
+    product.category.trim().toLowerCase() === category.trim().toLowerCase()
 );
 
+console.log('data_by_id')
+console.log(data_by_id)
+                                                        
 const { title, meta_title, description, image } = (data_by_id as any)?.data || {};
 // Aqui!!!
 ---

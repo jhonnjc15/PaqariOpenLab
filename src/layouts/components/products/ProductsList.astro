@@ -7,6 +7,14 @@ import { humanize, plainify, slugify } from "@lib/utils/textConverter";
 const { summary_length } = config.settings;
 const { products } = Astro.props;
 
+const enhancedProducts = products.map((item) => {
+  const mainImageObj = item.data.images?.find((img) => img.isMain);
+  return {
+    ...item,
+    mainImage: mainImageObj?.src || '/images/default.jpg'
+  };
+});
+
 import { getRelativeLocaleUrl } from "astro:i18n";
 
 const { currentLocale } = Astro
@@ -18,41 +26,41 @@ const i18n = getI18N({ currentLocale })
 <h2 class="h4 mb-4">{i18n.LAYOUTS.COMPONENTS.PRODUCTS.PRODUCTSLIST.H2_SUBTITLE}</h2>
 <div class="border-2 border-blue-700 flex flex-row flex-wrap gap-4 justify-around">
   {
-    products.map((item: any) => (
-        <div class="relative flex flex-col text-gray-700 bg-white shadow-md bg-clip-border rounded-xl w-[420px]">
-          <div class="relative mx-4 mt-4 overflow-hidden text-gray-700 bg-white bg-clip-border rounded-xl h-96">
-            <Image
-              class="card-img w-full h-full"
-              width={335}
-              height={210}
-              src={item.data.image}
-              alt=""
-            />
-            <span class="uppercase absolute top-0 right-0 m-4 rounded-lg bg-paqariYellow px-4 py-1 text-center text-sm font-medium text-white">{item.data.category}
-            </span>
-          </div>
-          <div class="p-6">
-            <div class="flex items-center justify-between mb-2">
-              <p class="block font-sans text-base antialiased font-medium leading-relaxed text-blue-gray-900">
-                {item.data.title}
-              </p>
-              <p class="block font-sans text-base antialiased font-medium leading-relaxed text-blue-gray-900">
-                $95.00
-              </p>
-            </div>
-            <p class="block font-sans text-sm antialiased font-normal leading-normal text-gray-700 opacity-75">
-              {plainify(item.data.description?.slice(0, Number(summary_length)))}...
+    enhancedProducts.map((item: any) => (
+      <div class="relative flex flex-col text-gray-700 bg-white shadow-md bg-clip-border rounded-xl w-[420px]">
+        <div class="relative mx-4 mt-4 overflow-hidden text-gray-700 bg-white bg-clip-border rounded-xl h-96">
+          <Image
+            class="card-img w-full h-full"
+            width={335}
+            height={210}
+            src={item.mainImage}
+            alt={item.data.title}
+          />
+          <span class="uppercase absolute top-0 right-0 m-4 rounded-lg bg-paqariYellow px-4 py-1 text-center text-sm font-medium text-white">{item.data.category}
+          </span>
+        </div>
+        <div class="p-6">
+          <div class="flex items-center justify-between mb-2">
+            <p class="block font-sans text-base antialiased font-medium leading-relaxed text-blue-gray-900">
+              {item.data.title}
+            </p>
+            <p class="block font-sans text-base antialiased font-medium leading-relaxed text-blue-gray-900">
+              $95.00
             </p>
           </div>
-          <div class="p-6 pt-0">
-            <a
-              class="align-middle select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 px-6 rounded-lg shadow-gray-900/10 hover:shadow-gray-900/20 focus:opacity-[0.85] active:opacity-[0.85] active:shadow-none block w-full bg-gray-900/10 text-gray-900 shadow-none hover:scale-105 hover:shadow-none focus:scale-105 focus:shadow-none active:scale-100"
-              href={getRelativeLocaleUrl(currentLocale ?? '',`${`/products/${item.data.category}/${item.data.id_product}`}`)}
-              type="button">
-              More info
-            </a>
-          </div>
+          <p class="block font-sans text-sm antialiased font-normal leading-normal text-gray-700 opacity-75">
+            {plainify(item.data.description?.slice(0, Number(summary_length)))}...
+          </p>
         </div>
+        <div class="p-6 pt-0">
+          <a
+            class="align-middle select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 px-6 rounded-lg shadow-gray-900/10 hover:shadow-gray-900/20 focus:opacity-[0.85] active:opacity-[0.85] active:shadow-none block w-full bg-gray-900/10 text-gray-900 shadow-none hover:scale-105 hover:shadow-none focus:scale-105 focus:shadow-none active:scale-100"
+            href={getRelativeLocaleUrl(currentLocale ?? '',`${`/products/${item.data.category}/${item.data.id_product}`}`)}
+            type="button">
+            More info
+          </a>
+        </div>
+      </div>
     ))
   }
 </div>

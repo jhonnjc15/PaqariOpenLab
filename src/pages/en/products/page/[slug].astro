@@ -10,6 +10,9 @@ import { getSinglePage } from "@lib/contentParser.astro";
 import { sortByDate } from "@lib/utils/sortFunctions";
 import { getEntryBySlug } from "astro:content";
 
+import productsJson from "@data/products.json";
+
+
 export async function getStaticPaths() {
   const posts = await getSinglePage(config.settings.product_folder);
   const totalPages = Math.ceil(posts.length / config.settings.pagination);
@@ -29,19 +32,29 @@ const blogIndex = await getEntryBySlug<any, string>(
   "-index"
 );
 const { slug } = Astro.params;
-const products = await getSinglePage(config.settings.product_folder);
-const sortedProducts = sortByDate(products);
+
+const { product_folder } = config.settings; // "blog"
+//const posts = await getSinglePage(product_folder);
+
+const posts = productsJson.map((product) => ({
+  data: product,
+  slug: `product-${product.id_product}`,
+}));
+const sortedProducts = posts;
+
 const recentProduct = sortedProducts.filter((item) => !item.data.featured);
 const totalPages = Math.ceil(recentProduct.length / config.settings.pagination);
 const currentPage = slug && !isNaN(Number(slug)) ? Number(slug) : 1;
 const indexOfLastProduct = currentPage * config.settings.pagination;
 const indexOfFirstProduct = indexOfLastProduct - config.settings.pagination;
 const currentProducts = recentProduct.slice(indexOfFirstProduct, indexOfLastProduct);
+
 const page_data = {
   index_title: blogIndex.data.title,
   slug: `page / ${slug}`,
   index_path: `${config.settings.product_folder}`
 };
+
 ---
 
 <Base
@@ -59,7 +72,7 @@ const page_data = {
   <section class="border border-red-700 section mx-4 md:mx-10 lg:mx-20 mt-12">
       <ProductsList products={currentProducts} />
       <Pagination
-        section={config.settings.product_folder}
+        section={product_folder}
         totalPages={totalPages}
         currentPage={currentPage}
       />

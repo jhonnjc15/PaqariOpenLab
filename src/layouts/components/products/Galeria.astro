@@ -1,17 +1,19 @@
 ---
 // Parte del servidor (Astro)
 import "photoswipe/style.css";
+import allProducts from "@data/products.json"; // Ajusta la ruta si es necesario
 
 const { id_product } = Astro.props;
 
-const allImages = Object.keys(import.meta.glob('/public/images/products/*/*'));
-const images = allImages
-  .filter(img => img.includes(`/products/${id_product}/`))
-  .map(img => ({
-    src: img.replace('/public', ''),
-    isMain: img.includes(`product-${id_product}-1.jpg`) || img.includes('product.jpg')
-  }));
+// Buscar el producto con ese ID
+const product = allProducts.find(p => p.id_product === id_product);
 
+if (!product) {
+  throw new Error(`No se encontró el producto con id_product=${id_product}`);
+}
+
+// Obtener las imágenes desde el JSON
+const images = product.images || [];
 const mainImage = images.find(img => img.isMain);
 const galleryImages = images.filter(img => !img.isMain);
 ---
