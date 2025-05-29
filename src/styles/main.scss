@@ -1,3 +1,40 @@
+// ✅ Importa módulos SCSS antes de cualquier otra regla
+@use "./base" as *;
+@use "./components" as *;
+@use "./navigation" as *;
+@use "./buttons" as *;
+@use "./utilities" as *;
+
+// ✅ Luego vienen las directivas Tailwind
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+// ✅ Variables CSS para colores (custom properties)
+@layer base {
+  :root {
+    --color-primary: #217276;
+    --color-secondary: #f3a415;
+    --color-text: theme("colors.gray.900");
+    --color-text-offset: theme("colors.gray.600");
+    --color-background: #f2fbfa;
+    --color-background-offset: #75d3d1;
+    --color-border: #217276;
+  }
+}
+
+.dark {
+  --color-primary: #f3a415;
+  --color-secondary: #217276;
+  --color-text: theme("colors.gray.50");
+  --color-text-offset: theme("colors.gray.400");
+  --color-background: #0b2528;
+  --color-background-offset: #1e4d51;
+  --color-border: #f3a415;
+}
+
+
+/*
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -24,7 +61,7 @@
   --color-border: #f3a415;
 }
 
-/*
+//*
 PaqariGreen
 --atoll-50: #f2fbfa;
 --atoll-100: #d4f3f1;
@@ -37,9 +74,9 @@ PaqariGreen
 --atoll-800: #1e4d51;
 --atoll-900: #1d4144;
 --atoll-950: #0b2528;
-*/
 
-/*
+
+
 PaqariYellow
 --yellow-sea-50: #fffbeb;
 --yellow-sea-100: #fdf4c8;
@@ -52,7 +89,7 @@ PaqariYellow
 --yellow-sea-800: #91420f;
 --yellow-sea-900: #773710;
 --yellow-sea-950: #441b04;
-*/
+//*
 
 
 @layer components {
@@ -64,3 +101,5 @@ PaqariYellow
 @layer utilities {
   @import "utilities";
 }
+
+*/
