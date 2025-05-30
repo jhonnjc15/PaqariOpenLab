@@ -4,6 +4,7 @@ import Shape from "@components/Shape.astro";
 import Base from "@layouts/Base.astro";
 import Faq from "@layouts/function-components/Faq.jsx";
 import { getEntryBySlug } from "astro:content";
+import ProductsExperiencesHome from "@components/products/ProductsExperiencesHome.astro"
 import ProductsExperiencesProducts from "@components/products/ProductsExperiencesProducts.astro"
 
 import ProductsList from "@components/products/ProductsList.astro";
@@ -13,25 +14,36 @@ import Pagination from "@layouts/components/Pagination.astro";
 import { getSinglePage } from "@lib/contentParser.astro";
 import { sortByDate } from "@lib/utils/sortFunctions";
 
+import productsJson from "@data/products.json";
+
 
 const { product_folder } = config.settings; // "blog"
-const posts = await getSinglePage(product_folder);
-const sortedPosts = sortByDate(posts);
+//const posts = await getSinglePage(product_folder);
+
+const posts = productsJson.map((product) => ({
+  data: product,
+  slug: `product-${product.id_product}`,
+}));
+const sortedPosts = posts;
+//const sortedPosts = sortByDate(posts);
 const recentPost = sortedPosts.filter((item) => !item.data.featured);
 const totalPages = Math.ceil(recentPost.length / config.settings.pagination);
 const currentPosts = recentPost.slice(0, config.settings.pagination);
 
+
+console.log('sortedPosts')
 console.log(sortedPosts)
+console.log('currentPosts')
 console.log(currentPosts)
-console.log(product_folder)
+//console.log(product_folder)
 
 const products = await getEntryBySlug("products", "-index");
-console.log(products)
+
 const page_data = {
   ...products.data,
   content: products.body,
 };
-console.log(page_data)
+
 ---
 
 <Base
@@ -48,7 +60,6 @@ console.log(page_data)
   </section>
   <!-- products -->
   <section class="section mt-12 pt-0">
-    
     <ProductsExperiencesProducts/>
   </section>
   <section class="border border-red-700 section mx-4 md:mx-10 lg:mx-20 mt-12">

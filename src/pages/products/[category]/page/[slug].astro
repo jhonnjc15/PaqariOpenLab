@@ -9,7 +9,7 @@ import Pagination from "@layouts/components/Pagination.astro";
 import { getSinglePage } from "@lib/contentParser.astro";
 import { sortByDate } from "@lib/utils/sortFunctions";
 import { getEntryBySlug } from "astro:content";
-import categories_data from "@data/categories.json" // Importa el archivo JSON con las categorías
+import categories_data from "@data/categories.json"
 
 
 export async function getStaticPaths() {
@@ -74,8 +74,8 @@ const product_folder_category = `${config.settings.product_folder}/${category}`
     </div>
   </section>
   <section class="border border-red-700 section mx-4 md:mx-10 lg:mx-20 mt-12">
-      <ProductsList products={currentPosts} />
-      <Pagination
+    <ProductsList products={currentPosts} />
+    <Pagination
 const product_folder_category = `${config.settings.product_folder}/${category}` 
         section={product_folder_category}
         totalPages={totalPages}

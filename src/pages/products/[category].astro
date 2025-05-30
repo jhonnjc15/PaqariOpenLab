@@ -9,7 +9,6 @@ import Shape from "@components/Shape.astro";
 import Base from "@layouts/Base.astro";
 import Faq from "@layouts/function-components/Faq.jsx";
 import { getEntryBySlug } from "astro:content";
-import ProductsExperiences from "@components/products/ProductsExperiencesHome.astro"
 
 import ProductsList from "@components/products/ProductsList.astro";
 import Blogs from "@components/Blogs.astro";
@@ -18,7 +17,7 @@ import Pagination from "@layouts/components/Pagination.astro";
 import { getSinglePage } from "@lib/contentParser.astro";
 import { sortByDate } from "@lib/utils/sortFunctions";
 
-
+import productsJson from "@data/products.json";
 
 
 interface Category {
@@ -65,9 +64,14 @@ console.log(category_by_name.category_name)
 
 
 
-const { product_folder } = config.settings; // "products"
-const posts = await getSinglePage(product_folder);
-const sortedPosts = sortByDate(posts);
+const { product_folder } = config.settings; // "blog"
+//const posts = await getSinglePage(product_folder);
+
+const posts = productsJson.map((product) => ({
+  data: product,
+  slug: `product-${product.id_product}`,
+}));
+const sortedPosts = posts;
 const recentPost = sortedPosts.filter((item) => !item.data.featured);
 const recentPost_category = recentPost.filter((item) => item.data.category===`${category_by_name.category_name}`);
 const totalPages = Math.ceil(recentPost_category.length / config.settings.pagination);
@@ -110,7 +114,6 @@ const product_folder_category = `${product_folder}/${category_by_name.category_n
       currentPage={1}
       totalPages={totalPages}
     />
-
   </section>
   {/*
   <Faq client:load data={products.data} />
