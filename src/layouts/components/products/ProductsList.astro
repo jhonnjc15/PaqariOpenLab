@@ -30,6 +30,7 @@ const i18n = getI18N({ currentLocale })
       <div class="relative flex flex-col text-gray-700 bg-white shadow-md bg-clip-border rounded-xl w-[420px]">
         <div class="relative mx-4 mt-4 overflow-hidden text-gray-700 bg-white bg-clip-border rounded-xl h-96">
           <Image
+            transition:name={`img-${item.data.id_product}`}
             class="card-img w-full h-full"
             width={335}
             height={210}
@@ -41,7 +42,7 @@ const i18n = getI18N({ currentLocale })
         </div>
         <div class="p-6">
           <div class="flex items-center justify-between mb-2">
-            <p class="block font-sans text-base antialiased font-medium leading-relaxed text-blue-gray-900">
+            <p transition:name={`title-${item.data.id_product}`} class="block font-sans text-base antialiased font-medium leading-relaxed text-blue-gray-900">
               {item.data.title}
             </p>
             <p class="block font-sans text-base antialiased font-medium leading-relaxed text-blue-gray-900">
