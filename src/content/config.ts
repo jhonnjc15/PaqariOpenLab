@@ -66,6 +66,7 @@ const productsCollection = defineCollection({
     id_category: z.number().optional(),
     name: z.string().optional(),
     title: z.string(),
+    page_title: z.string(),
     description: z.string().optional(),
     feature_1: z.string().optional(),
     feature_2: z.string().optional(),
@@ -81,5 +82,5 @@ const productsCollection = defineCollection({
 export const collections = {
   blog: blogCollection,
   pages: pagesCollection,
-  products: productsCollection,
+  //products: productsCollection,
 };

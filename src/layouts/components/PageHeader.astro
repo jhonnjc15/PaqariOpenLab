@@ -5,12 +5,12 @@ import { getRelativeLocaleUrl } from "astro:i18n";
 const { currentLocale } = Astro
 const { page_data } = Astro.props || {};
 const { title, index_title, page_title, slug, content, index_path } = page_data || {};
-console.log(title)
-console.log(index_title)
-console.log(page_title)
-console.log(slug)
-console.log(content)
-console.log(index_path)
+// //console.log(title)
+// //console.log(index_title)
+// //console.log(page_title)
+// //console.log(slug)
+// //console.log(content)
+// //console.log(index_path)
 ---
 
 <div class="text-center">
@@ -57,7 +57,7 @@ console.log(index_path)
     </li>
   </ul>
   <h1
-    class="mb-5 mt-8 text-default"
+    class="border-2 border-red-500 mb-5 mt-8 text-default"
     set:html={markdownify(
       page_data?.page_title ? page_data?.page_title : page_data?.title
     )}

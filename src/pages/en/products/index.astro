@@ -31,19 +31,29 @@ const totalPages = Math.ceil(recentPost.length / config.settings.pagination);
 const currentPosts = recentPost.slice(0, config.settings.pagination);
 
 
-console.log('sortedPosts')
-console.log(sortedPosts)
-console.log('currentPosts')
-console.log(currentPosts)
-//console.log(product_folder)
+//console.log('sortedPosts')
+//console.log(sortedPosts)
+//console.log('currentPosts')
+//console.log(currentPosts)
+////console.log(product_folder)
 
-const products = await getEntryBySlug("en", "products/-index");
+const products = await getEntryBySlug("products", "-index");
+const { title, page_title, product_list } = products.data;
+
+console.log('title')
+console.log(title)
+console.log(page_title)
+console.log(product_list)
 
 const page_data = {
   ...products.data,
   content: products.body,
 };
+// console.log('products')
+// console.log(products)
 
+// console.log('page_data')
+// console.log(page_data)
 ---
 
 <Base
@@ -63,7 +73,10 @@ const page_data = {
     <ProductsExperiencesProducts/>
   </section>
   <section class="border border-red-700 section mx-4 md:mx-10 lg:mx-20 mt-12">
-    <ProductsList products={currentPosts} />
+    <ProductsList 
+      products={currentPosts} 
+      product_list={product_list}
+    />
     <Pagination
       section={product_folder}
       currentPage={1}
@@ -73,4 +86,5 @@ const page_data = {
   {/*
   <Faq client:load data={products.data} />
    */}
+
 </Base>

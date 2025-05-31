@@ -5,7 +5,7 @@ banner:
   image: /images/banner-img.png
   button:
     label: Descargar el Tema
-    link: "https://themefisher.com/astro-themes/pinwheel-astro"
+    link: "/"
     enable: true
 
 ##key features

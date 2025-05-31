@@ -22,7 +22,8 @@ function ErrorFallback({ error, resetErrorBoundary }) {
   );
 }
 
-const Form = () => {
+const Form = ({ form_content_data }) => {
+
   const [modalStateForm, setModalStateForm] = useState(false);
   const [confirmStateForm, setConfirmStateForm] = useState(false);
 
@@ -39,7 +40,7 @@ const Form = () => {
   } = useForm();
   // @ts-ignore
   const onSubmit = (data) => {
-    console.log("Holaaaaa");
+    //console.log("Holaaaaa");
     setModalStateForm(!modalStateForm);
     if (confirmStateForm === true) {
       console.log("Holaaaaa");
@@ -55,7 +56,7 @@ const Form = () => {
         .then((response) => response.json())
         .then((data) => {
           setLoading(false);
-          console.log(data);
+          //console.log(data);
           reset();
           if (data.success === "true") {
             setResponse(true);
@@ -66,7 +67,7 @@ const Form = () => {
           }
         })
         .catch((error) => {
-          console.log(error);
+          //console.log(error);
           setLoading(false);
           setErrorResponse(true);
           setTimeout(() => setErrorResponse(false), 5000);
@@ -76,12 +77,12 @@ const Form = () => {
   };
 
   const EmailErrorsList = {
-    required: "El campo email es requerido",
-    pattern: "El formato del email es incorrecto",
+    required: `${form_content_data?.email.required_error_message}`,
+    pattern: `${form_content_data?.email.pattern_error_message}`,
   };
   const MessageErrorsList = {
-    required: "El campo message es requerido",
-    pattern: "El número máximo de caracteres es 500",
+    required: `${form_content_data?.message.required_error_message}`,
+    pattern: `${form_content_data?.message.pattern_error_message}`,
   };
   
 
@@ -93,9 +94,10 @@ const Form = () => {
       className="flex text-default flex-col justify-around sm:px-20 md:px-8 lg:px-16 items-center  h-full"
       onSubmit={handleSubmit(onSubmit)}
     >
+        {/* Name */}
         <div className="flex flex-col w-full ">
           <label className="text-base font-semibold leading-none">
-            Nombre completo
+            {form_content_data?.name.title}
           </label>
           <input
             type="text"
@@ -111,12 +113,13 @@ const Form = () => {
               errors.fullName?.type === "required" ? "" : "invisible"
             } text-red-500`}
           >
-            El campo Nombre completo es requerido
+            {form_content_data?.name.error_message}
           </p>
         </div>
+        {/* Email */}
         <div className="flex flex-col w-full">
           <label className="text-base font-semibold leading-none ">
-            Email
+            {form_content_data?.email.title}
           </label>
           <input
             type="text"
@@ -137,12 +140,13 @@ const Form = () => {
           >
             {errors.email?.type
               ? EmailErrorsList[errors.email?.type]
-              : "Espacio que completar"}
+              : `${form_content_data?.email.random_error_message}`}
           </p>
         </div>
+        {/* Asunto */}
         <div className="flex w-full flex-col">
           <label className="text-base font-semibold leading-none ">
-            Asunto
+            {form_content_data?.about.title}
           </label>
           <input
             className={`form-control-paqari ${
@@ -158,16 +162,17 @@ const Form = () => {
               errors.subject?.type === "required" ? "" : "invisible"
             } text-red-500`}
           >
-            El campo Asunto es requerido
+            {form_content_data?.about.error_message}
           </p>
         </div>
+        {/* Mensaje*/}
         <div className="flex w-full flex-col">
           <div className="flex flex-row justify-between">
             <label className="text-base font-semibold leading-none ">
-              Mensaje
+              {form_content_data?.message.title}
             </label>
             <label className="font-xs text-base font-light leading-none text-offset">
-              Max. 500 caracteres
+              {form_content_data?.message.max_characters}
             </label>
           </div>
           <textarea
@@ -179,10 +184,10 @@ const Form = () => {
             {...register("message", { required: true, maxLength: 500 })}
           />
           {errors.message?.type === "required" && (
-            <p className="text-xs text-red-500">El campo message es requerido</p>
+            <p className="text-xs text-red-500">{form_content_data?.message.required_error_message}</p>
           )}
           {errors.message?.type === "maxLength" && (
-            <p className="text-xs text-red-500">Número máximo de caracteres es 500</p>
+            <p className="text-xs text-red-500">{form_content_data?.message.pattern_error_message}</p>
           )}
         </div>
         <button
@@ -212,10 +217,11 @@ const Form = () => {
               ></path>
             </svg>
           )}
-          {loading ? "Enviando ..." : "Enviar"}
+          {loading ? `${form_content_data?.send_message_button.sending_label} ...` : `${form_content_data?.send_message_button.label}`}
           </div>
         </button>
         <Modal
+          modal_content_data={form_content_data.modal}
           modalStateForm={modalStateForm}
           setModalStateForm={setModalStateForm}
           confirmStateForm={confirmStateForm}
@@ -241,7 +247,7 @@ const Form = () => {
               d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"
             ></path>
           </svg>
-          El correo fue enviado exitosamente!
+          {form_content_data?.final_menssage.success_message}
         </div>
       )}
       {errorResponse && (
@@ -264,7 +270,7 @@ const Form = () => {
               d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm121.6 313.1c4.7 4.7 4.7 12.3 0 17L338 377.6c-4.7 4.7-12.3 4.7-17 0L256 312l-65.1 65.6c-4.7 4.7-12.3 4.7-17 0L134.4 338c-4.7-4.7-4.7-12.3 0-17l65.6-65-65.6-65.1c-4.7-4.7-4.7-12.3 0-17l39.6-39.6c4.7-4.7 12.3-4.7 17 0l65 65.7 65.1-65.6c4.7-4.7 12.3-4.7 17 0l39.6 39.6c4.7 4.7 4.7 12.3 0 17L312 256l65.6 65.1z"
             ></path>
           </svg>
-          Error al enviar el correo!
+          {form_content_data?.final_menssage.failed_message}
         </div>
       )}
     </form>

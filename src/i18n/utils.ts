@@ -58,7 +58,7 @@ function splitArrayAtElement(arr: string[]): [string[], string[]] {
     } else {
         // Si la palabra "page" no está presente, buscar un elemento que pueda convertirse en número
         const index = findIndexConvertibleToNumber(arr);
-        console.log(index)
+        ////console.log(index)
         if (index !== -1) {
             // Si se encuentra un elemento que puede convertirse en número, dividir el array en dos partes
             const firstPart = arr.slice(0, index);
@@ -78,34 +78,34 @@ function concatenateWithDelimiter(str: string, arr: string[]): string {
 
 export function getRouteFromUrl(url: URL): string | undefined {
   const pathname = new URL(url).pathname;
-  console.log('Pathname:', pathname);
+  ////console.log('Pathname:', pathname);
 
   const parts = pathname?.split('/');
-  console.log('Parts:', parts);
+  ////console.log('Parts:', parts);
 
   const [firstPart, secondPart] = splitArrayAtElement(parts);
 
-  console.log(secondPart)
+  //onsole.log(secondPart)
   const path = firstPart.pop() || firstPart.pop();
-  console.log('Path:', path);
+  ////console.log('Path:', path);
 
   if (path === undefined) {
-      console.log('Path is undefined');
+      ////console.log('Path is undefined');
       return undefined;
   }
 
   const currentLang = getLangFromUrl(url);
-  console.log('Current language:', currentLang);
+  ////console.log('Current language:', currentLang);
 
   if (defaultLang === currentLang) {
-      console.log(routes)
-      console.log(Object.values(routes)[0])
+      ////console.log(routes)
+      ////console.log(Object.values(routes)[0])
       const route = Object.values(routes)[0];
-      console.log(route)
+      ////console.log(route)
       const routeValue = route[path as keyof typeof route];
-      console.log('Route for default language:', routeValue);
+      ////console.log('Route for default language:', routeValue);
       const concatenatedString = concatenateWithDelimiter(routeValue, secondPart);
-      console.log(concatenatedString)
+      ////console.log(concatenatedString)
       return routeValue !== undefined ? concatenatedString : undefined;
   }
 
@@ -116,9 +116,9 @@ export function getRouteFromUrl(url: URL): string | undefined {
       return Object.keys(obj).find(key => obj[key] === value);
   };
 
-  console.log(routes)
+  ////console.log(routes)
   const reversedKey = getKeyByValue(routes[currentLang], path);
-  console.log('Reversed key:', reversedKey);
+  ////console.log('Reversed key:', reversedKey);
 
   if (reversedKey !== undefined) {
       const concatenatedString = concatenateWithDelimiter(reversedKey, secondPart);

@@ -6,6 +6,8 @@ import { getEntryBySlug } from "astro:content";
 import Form from "@layouts/function-components/Form";
 
 const entry = await getEntryBySlug("contact", "index");
+const { title, page_title, form_content_data } = entry.data;
+
 const { contact_form_action } = config.params;
 const contact = entry.data;
 const page_data = {
@@ -34,7 +36,10 @@ const page_data = {
     <div class="container">
       <div class="row">
         <div class="md:col-6 order-2">
-          <Form transition:persist client:visible/>
+          <Form 
+            form_content_data={form_content_data}
+            transition:persist client:visible
+          />
         </div>
         <div class=" bg-gradient-to-tl pt-9 mb-10 text-center md:col-6 order-1 md:mb-0 ">
           <div class="contact-img relative inline-flex pb-5 pl-5">

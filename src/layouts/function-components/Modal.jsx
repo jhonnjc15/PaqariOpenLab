@@ -1,6 +1,6 @@
 import React, { useRef } from 'react'
 
-const Modal = ({ modalStateForm, setModalStateForm, confirmStateForm, setConfirmStateForm}) => {
+const Modal = ({ modal_content_data, modalStateForm, setModalStateForm, confirmStateForm, setConfirmStateForm}) => {
     
     const anchorRef = useRef(null)
     const handleClickOutsideDropdown =(e)=>{
@@ -28,9 +28,9 @@ const Modal = ({ modalStateForm, setModalStateForm, confirmStateForm, setConfirm
                         </svg>
                     </div>
                     <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                        <h3 className="text-lg font-medium leading-6 text-gray-900" id="modal-title">Confirmación de correo</h3>
+                        <h3 className="text-lg font-medium leading-6 text-gray-900" id="modal-title">{modal_content_data.email_confirmation}</h3>
                         <div className="mt-2">
-                        <p className="text-sm text-gray-500">¿Está seguro(a) de enviar el correo?</p>
+                        <p className="text-sm text-gray-500">{modal_content_data.question}</p>
                         </div>
                     </div>
                     </div>
@@ -41,14 +41,14 @@ const Modal = ({ modalStateForm, setModalStateForm, confirmStateForm, setConfirm
                         className="mt-3 inline-flex w-full justify-center rounded-md border border-paqariYellow bg-paqariYellow px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-paqariYellowHover focus:outline-none focus:ring-2 focus:ring-paqariYellow focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
                         onClick={()=>setConfirmStateForm(true)}
                     >
-                        Enviar
+                        {modal_content_data.send}
                     </button>
                     <button 
                         type="submit" 
                         className="inline-flex w-full justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
                         onClick={()=>setModalStateForm(false)}
                     >
-                        Cancel
+                        {modal_content_data.cancel}
                     </button>
                    
                 </div>

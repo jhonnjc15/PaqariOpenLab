@@ -5,7 +5,7 @@ import dateFormat from "@lib/utils/dateFormat";
 import readingTime from "@lib/utils/readingTime";
 import { humanize, plainify, slugify } from "@lib/utils/textConverter";
 const { summary_length } = config.settings;
-const { products } = Astro.props;
+const { products, product_list } = Astro.props;
 
 const enhancedProducts = products.map((item) => {
   const mainImageObj = item.data.images?.find((img) => img.isMain);
@@ -23,7 +23,11 @@ import { getI18N } from '@i18n/index';
 const i18n = getI18N({ currentLocale })
 ---
 <div>
-<h2 class="h4 mb-4">{i18n.LAYOUTS.COMPONENTS.PRODUCTS.PRODUCTSLIST.H2_SUBTITLE}</h2>
+{/* <h2 class="h4 mb-4">{i18n.LAYOUTS.COMPONENTS.PRODUCTS.PRODUCTSLIST.H2_SUBTITLE}</h2> */}
+<h2 class="h4 mb-4">{product_list.title}</h2>
+<p class="mb-4">
+  {product_list.description}
+</p>
 <div class="border-2 border-blue-700 flex flex-row flex-wrap gap-4 justify-around">
   {
     enhancedProducts.map((item: any) => (
@@ -46,7 +50,7 @@ const i18n = getI18N({ currentLocale })
               {item.data.title}
             </p>
             <p class="block font-sans text-base antialiased font-medium leading-relaxed text-blue-gray-900">
-              $95.00
+              ${item.data.price}
             </p>
           </div>
           <p class="block font-sans text-sm antialiased font-normal leading-normal text-gray-700 opacity-75">
@@ -58,7 +62,7 @@ const i18n = getI18N({ currentLocale })
             class="align-middle select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 px-6 rounded-lg shadow-gray-900/10 hover:shadow-gray-900/20 focus:opacity-[0.85] active:opacity-[0.85] active:shadow-none block w-full bg-gray-900/10 text-gray-900 shadow-none hover:scale-105 hover:shadow-none focus:scale-105 focus:shadow-none active:scale-100"
             href={getRelativeLocaleUrl(currentLocale ?? '',`${`/products/${item.data.category}/${item.data.id_product}`}`)}
             type="button">
-            More info
+            {product_list.product_detail_button.label}
           </a>
         </div>
       </div>

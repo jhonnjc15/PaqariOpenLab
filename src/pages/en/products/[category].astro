@@ -27,17 +27,15 @@ interface Category {
 
 function get_category_data_by_id({ name }) {
   // Importa el archivo JSON directamente (asegúrate de que la ruta sea correcta)
-  console.log(name);
+  //console.log(name);
   
   // Busca la categoría por el nombre
   const category = categories_data.find((category) => category.category_name === name);
-  //console.log(category);
+  ////console.log(category);
 
   // Devuelve la categoría si se encuentra, o null si no hay coincidencia
   return category || null;
 }
-
-
 
 const { category } = Astro.params;
 console.log(category)
@@ -58,11 +56,7 @@ export const getStaticPaths = (() => {
   }));
   return allCategories
 });
-console.log(category_by_name.category_name)
-
-
-
-
+//console.log(category_by_name.category_name)
 
 const { product_folder } = config.settings; // "blog"
 //const posts = await getSinglePage(product_folder);
@@ -77,18 +71,20 @@ const recentPost_category = recentPost.filter((item) => item.data.category===`${
 const totalPages = Math.ceil(recentPost_category.length / config.settings.pagination);
 const currentPosts = recentPost_category.slice(0, config.settings.pagination);
 
-console.log(sortedPosts)
-console.log(currentPosts)
-console.log(product_folder)
+//console.log(sortedPosts)
+//console.log(currentPosts)
+//console.log(product_folder)
 
+const products = await getEntryBySlug("products", `-${category}`);
+const { title, page_title, product_list } = products.data;
 
-const products = await getEntryBySlug("products", `-${category_by_name.category_name}`);
+console.log('products')
 console.log(products)
 const page_data = {
   ...products.data,
   content: products.body,
 };
-console.log(page_data)
+//console.log(page_data)
 
 const product_folder_category = `${product_folder}/${category_by_name.category_name}` 
 
@@ -108,7 +104,10 @@ const product_folder_category = `${product_folder}/${category_by_name.category_n
   </section>
   <!-- products -->
   <section class="border border-red-700 section mx-4 md:mx-10 lg:mx-20 mt-12">
-    <ProductsList products={currentPosts} />
+    <ProductsList 
+      products={currentPosts} 
+      product_list={product_list}
+    />
     <Pagination
       section={product_folder_category}
       currentPage={1}

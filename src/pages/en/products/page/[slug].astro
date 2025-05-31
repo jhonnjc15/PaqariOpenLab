@@ -32,6 +32,9 @@ const blogIndex = await getEntryBySlug<any, string>(
   "-index"
 );
 
+const products = await getEntryBySlug("products", "-index");
+const { title, page_title, product_list } = products.data;
+
 const { slug } = Astro.params;
 const { product_folder } = config.settings;
 
@@ -50,6 +53,10 @@ const currentPage = slug && !isNaN(Number(slug)) ? Number(slug) : 1;
 const indexOfLastProduct = currentPage * config.settings.pagination;
 const indexOfFirstProduct = indexOfLastProduct - config.settings.pagination;
 const currentProducts = recentProduct.slice(indexOfFirstProduct, indexOfLastProduct);
+
+console.log('currentProducts')
+console.log(currentProducts)
+
 
 // Metadata para PageHeader
 const page_data = {
@@ -72,7 +79,10 @@ const page_data = {
     </div>
   </section>
   <section class="section mx-4 md:mx-10 lg:mx-20 mt-12">
-    <ProductsList products={currentProducts} />
+    <ProductsList 
+      products={currentProducts} 
+      product_list={product_list}
+    />
     <Pagination
       section={product_folder}
       totalPages={totalPages}

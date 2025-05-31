@@ -16,7 +16,8 @@
       ],
       "video": "url_video_1.mp4",
       "draft": false,
-      "featured": false
+      "featured": false,
+      "price": 299
     },
     {
       "id_product": 2,
@@ -34,7 +35,8 @@
       ],
       "video": "url_video_2.mp4",
       "draft": false,
-      "featured": false
+      "featured": false,
+      "price": 100
     },
     {
       "id_product": 3,
@@ -55,7 +57,8 @@
       ],
       "video": "url_video_3.mp4",
       "draft": false,
-      "featured": false
+      "featured": false,
+      "price": 314
     },
     {
       "id_product": 4,
@@ -75,7 +78,8 @@
       ],
       "video": "url_video_4.mp4",
       "draft": false,
-      "featured": false
+      "featured": false,
+      "price": 345
     },
     {
       "id_product": 5,
@@ -94,7 +98,8 @@
       ],
       "video": "url_video_5.mp4",
       "draft": false,
-      "featured": false
+      "featured": false,
+      "price": 634
     },
     {
       "id_product": 6,
@@ -114,7 +119,8 @@
       ],
       "video": "url_video_6.mp4",
       "draft": false,
-      "featured": false
+      "featured": false,
+      "price": 234
     },
     {
       "id_product": 7,
@@ -132,7 +138,8 @@
       ],
       "video": "url_video_7.mp4",
       "draft": false,
-      "featured": false
+      "featured": false,
+      "price": 634
     },
     {
       "id_product": 8,
@@ -151,7 +158,8 @@
       ],
       "video": "url_video_8.mp4",
       "draft": false,
-      "featured": false
+      "featured": false,
+      "price": 354
     },
     {
       "id_product": 9,
@@ -171,7 +179,8 @@
       ],
       "video": "url_video_9.mp4",
       "draft": false,
-      "featured": false
+      "featured": false,
+      "price": 232
     },
     {
       "id_product": 10,
@@ -191,6 +200,7 @@
       ],
       "video": "url_video_10.mp4",
       "draft": false,
-      "featured": false
+      "featured": false,
+      "price": 123
     }
   ]
