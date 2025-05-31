@@ -8,7 +8,9 @@
                     "H2_SUBTITLE": "Total de productos."
                 }
             }
-    
         }
+    },
+    "contact_button": {
+        "wsp" : "Saludos%0D%0AMe interesan sus productos, me gustaría ponerme en contacto con ustedes 😀"
     }  
 }
