@@ -1,6 +1,7 @@
 import React, { useRef } from 'react'
+import { useEffect } from "react";
 
-const Modal = ({ modal_content_data, modalStateForm, setModalStateForm, confirmStateForm, setConfirmStateForm}) => {
+const Modal = ({ modal_content_data, modalStateForm, setModalStateForm, confirmStateForm, setConfirmStateForm, onConfirm}) => {
     
     const anchorRef = useRef(null)
     const handleClickOutsideDropdown =(e)=>{
@@ -11,6 +12,25 @@ const Modal = ({ modal_content_data, modalStateForm, setModalStateForm, confirmS
     if (typeof window !== 'undefined') {
         window.addEventListener("click",handleClickOutsideDropdown)
     }
+
+    // Escuchar tecla Escape
+    useEffect(() => {
+        const handleKeyDown = (e) => {
+        if (e.key === "Escape") {
+            setModalStateForm(false);
+        }
+        };
+
+        if (modalStateForm) {
+        window.addEventListener("keydown", handleKeyDown);
+        }
+
+        // Limpieza del evento al desmontar o cerrar modal
+        return () => {
+        window.removeEventListener("keydown", handleKeyDown);
+        };
+    }, [modalStateForm, setModalStateForm]);
+
     return (
     <>
     {modalStateForm &&
@@ -39,7 +59,10 @@ const Modal = ({ modal_content_data, modalStateForm, setModalStateForm, confirmS
                     <button 
                         type="button" 
                         className="mt-3 inline-flex w-full justify-center rounded-md border border-paqariYellow bg-paqariYellow px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-paqariYellowHover focus:outline-none focus:ring-2 focus:ring-paqariYellow focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
-                        onClick={()=>setConfirmStateForm(true)}
+                        onClick={() => {
+                        setModalStateForm(false);
+                        onConfirm(); // Aquí se hace el envío
+                        }}
                     >
                         {modal_content_data.send}
                     </button>

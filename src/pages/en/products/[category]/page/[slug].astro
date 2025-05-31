@@ -71,8 +71,8 @@ const currentPage = slug && !isNaN(Number(slug)) ? Number(slug) : 1;
 const indexOfLastPost = currentPage * config.settings.pagination;
 const indexOfFirstPost = indexOfLastPost - config.settings.pagination;
 const currentPosts = recentPost_category.slice(indexOfFirstPost, indexOfLastPost);
-console.log('currentPosts')
-console.log(currentPosts)
+// console.log('currentPosts')
+// console.log(currentPosts)
 
 const page_data = {
   index_title: blogIndex.data.title,

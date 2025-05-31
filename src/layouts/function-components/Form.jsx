@@ -24,6 +24,8 @@ function ErrorFallback({ error, resetErrorBoundary }) {
 
 const Form = ({ form_content_data }) => {
 
+  const [formData, setFormData] = useState(null); //Gaurda data para envio de corroe
+
   const [modalStateForm, setModalStateForm] = useState(false);
   const [confirmStateForm, setConfirmStateForm] = useState(false);
 
@@ -39,42 +41,41 @@ const Form = ({ form_content_data }) => {
     watch,
   } = useForm();
   // @ts-ignore
+
   const onSubmit = (data) => {
-    //console.log("Holaaaaa");
-    setModalStateForm(!modalStateForm);
-    if (confirmStateForm === true) {
-      console.log("Holaaaaa");
-      setLoading(true);
-      fetch("https://formsubmit.co/ajax/706ef5302b0527fc015fef24978ffc55 ", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        body: JSON.stringify(data),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          setLoading(false);
-          //console.log(data);
-          reset();
-          if (data.success === "true") {
-            setResponse(true);
-            setTimeout(() => setResponse(false), 5000);
-          } else {
-            setErrorResponse(true);
-            setTimeout(() => setErrorResponse(false), 5000);
-          }
-        })
-        .catch((error) => {
-          //console.log(error);
-          setLoading(false);
+    setFormData(data); // Guarda los datos
+    setModalStateForm(true); // Muestra el modal
+  };
+
+  const handleConfirmSend = () => {
+    if (!formData) return;
+    setLoading(true);
+    fetch("https://formsubmit.co/ajax/706ef5302b0527fc015fef24978ffc55 ", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify(formData),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setLoading(false);
+        reset();
+        if (data.success === "true") {
+          setResponse(true);
+          setTimeout(() => setResponse(false), 5000);
+        } else {
           setErrorResponse(true);
           setTimeout(() => setErrorResponse(false), 5000);
-        });
-      setConfirmStateForm(false);
-    }
-  };
+        }
+      })
+      .catch((error) => {
+        setLoading(false);
+        setErrorResponse(true);
+        setTimeout(() => setErrorResponse(false), 5000);
+      });
+  };  
 
   const EmailErrorsList = {
     required: `${form_content_data?.email.required_error_message}`,
@@ -85,9 +86,65 @@ const Form = ({ form_content_data }) => {
     pattern: `${form_content_data?.message.pattern_error_message}`,
   };
   
+  // Para preguntar antes de cerrar la pagina sin enviar el correo a medias
+  useEffect(() => {
+    const handleBeforeUnload = (event) => {
+      const currentValues = watch(); // obtiene los valores actuales del formulario
+      // Verificamos si algún campo tiene texto (no vacío ni solo espacios)
+      const isDirty = Object.values(currentValues).some(
+        (value) => value && value.trim() !== ""
+      );
+      if (isDirty) {
+        event.preventDefault();
+        event.returnValue = ""; // Para que el navegador muestre la alerta nativa
+      }
+    };
 
-  //To the alert when leave to page without send form
-  //usePrompt( "¿Está seguro de salir sin enviar el formulario?",JSON.stringify(watch()) !== JSON.stringify(InitialValues) && Object.keys(watch()).length !== 0)
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, [watch]);
+
+
+  function useConfirmNavigation(isDirty) {
+    useEffect(() => {
+      if (!isDirty) return;
+
+      function handleBeforeUnload(e) {
+        e.preventDefault();
+        e.returnValue = "¿Seguro que querés abandonar el formulario sin enviar el correo?";
+        return e.returnValue;
+      }
+
+      function handleLinkClick(e) {
+        const el = e.target.closest('a');
+        if (!el) return;
+
+        const href = el.getAttribute('href');
+        if (!href || href.startsWith('http') || href.startsWith('#')) return;
+
+        const confirmed = window.confirm("¿Seguro que querés abandonar el formulario sin enviar el correo?");
+        if (!confirmed) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+      }
+
+      window.addEventListener("beforeunload", handleBeforeUnload);
+      document.addEventListener("click", handleLinkClick, true);
+
+      return () => {
+        window.removeEventListener("beforeunload", handleBeforeUnload);
+        document.removeEventListener("click", handleLinkClick, true);
+      };
+    }, [isDirty]);
+  }
+  const currentValues = watch();
+  const isDirty = Object.values(currentValues).some(v => v && v.trim() !== '');
+
+  useConfirmNavigation(isDirty);
 
   return (
     <form
@@ -190,6 +247,7 @@ const Form = ({ form_content_data }) => {
             <p className="text-xs text-red-500">{form_content_data?.message.pattern_error_message}</p>
           )}
         </div>
+        {/* Button*/}
         <button
           type="submit"
           className={`focus:ring-primary btn btn-primary block mt-4 w-full rounded-full	 ${
@@ -224,8 +282,7 @@ const Form = ({ form_content_data }) => {
           modal_content_data={form_content_data.modal}
           modalStateForm={modalStateForm}
           setModalStateForm={setModalStateForm}
-          confirmStateForm={confirmStateForm}
-          setConfirmStateForm={setConfirmStateForm}
+          onConfirm={handleConfirmSend}
         />
       {response && (
         <div

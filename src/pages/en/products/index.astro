@@ -40,10 +40,10 @@ const currentPosts = recentPost.slice(0, config.settings.pagination);
 const products = await getEntryBySlug("products", "-index");
 const { title, page_title, product_list } = products.data;
 
-console.log('title')
-console.log(title)
-console.log(page_title)
-console.log(product_list)
+// console.log('title')
+// console.log(title)
+// console.log(page_title)
+// console.log(product_list)
 
 const page_data = {
   ...products.data,
