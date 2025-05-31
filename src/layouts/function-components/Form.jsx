@@ -107,14 +107,14 @@ const Form = ({ form_content_data }) => {
     };
   }, [watch]);
 
-
-  function useConfirmNavigation(isDirty) {
+  // Para preguntar antes cambiar de pagina sin enviar el correo a medias
+  function useConfirmNavigation(isDirty, form_content_data) {
     useEffect(() => {
       if (!isDirty) return;
 
       function handleBeforeUnload(e) {
         e.preventDefault();
-        e.returnValue = "¿Seguro que querés abandonar el formulario sin enviar el correo?";
+        e.returnValue = `${form_content_data?.nav_confirm_question}`;
         return e.returnValue;
       }
 
@@ -125,7 +125,7 @@ const Form = ({ form_content_data }) => {
         const href = el.getAttribute('href');
         if (!href || href.startsWith('http') || href.startsWith('#')) return;
 
-        const confirmed = window.confirm("¿Seguro que querés abandonar el formulario sin enviar el correo?");
+        const confirmed = window.confirm(`${form_content_data?.nav_confirm_question}`);
         if (!confirmed) {
           e.preventDefault();
           e.stopPropagation();
@@ -144,7 +144,7 @@ const Form = ({ form_content_data }) => {
   const currentValues = watch();
   const isDirty = Object.values(currentValues).some(v => v && v.trim() !== '');
 
-  useConfirmNavigation(isDirty);
+  useConfirmNavigation(isDirty, form_content_data);
 
   return (
     <form

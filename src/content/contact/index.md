@@ -28,5 +28,6 @@ form_content_data:
     email_confirmation: Confirmación de correo
     question: ¿Está seguro(a) de enviar el correo?
     send: Enviar
-    cancel: Cancelar 
+    cancel: Cancelar
+  nav_confirm_question: ¿Seguro(a) que quieres abandonar el formulario sin enviar el correo?
 ---
