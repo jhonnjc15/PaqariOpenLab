@@ -48,6 +48,11 @@ if (!products) {
   products = await getEntryBySlug("products", `${fallbackLocale}/-index`);
 }
 
+let faq = await getEntryBySlug("products", `${currentLocale}/-faq`);
+if (!faq) {
+  faq = await getEntryBySlug("products", `${fallbackLocale}/-faq`);
+}
+
 //const products = await getEntryBySlug("products", "-index");
 
 // console.log('products')
@@ -104,8 +109,5 @@ export async function getStaticPaths() {
       totalPages={totalPages}
     />
   </section>
-  {/*
-  <Faq client:load data={products.data} />
-   */}
-
+  <Faq client:load data={faq.data} />
 </Base>
