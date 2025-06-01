@@ -1,0 +1,115 @@
+---
+import PageHeader from "@components/PageHeader.astro";
+import Shape from "@components/Shape.astro";
+import Base from "@layouts/Base.astro";
+import Faq from "@layouts/function-components/Faq.jsx";
+import { getEntryBySlug } from "astro:content";
+import ProductsExperiencesHome from "@components/products/ProductsExperiencesHome.astro"
+import ProductsExperiencesProducts from "@components/products/ProductsExperiencesProducts.astro"
+
+import ProductsList from "@components/products/ProductsList.astro";
+import Blogs from "@components/Blogs.astro";
+import config from "@config/config.json";
+import Pagination from "@layouts/components/Pagination.astro";
+import { getSinglePage } from "@lib/contentParser.astro";
+import { sortByDate } from "@lib/utils/sortFunctions";
+
+import productsJson from "@data/products.json";
+
+
+const { product_folder } = config.settings; // "blog"
+//const posts = await getSinglePage(product_folder);
+
+const posts = productsJson.map((product) => ({
+  data: product,
+  slug: `product-${product.id_product}`,
+}));
+const sortedPosts = posts;
+//const sortedPosts = sortByDate(posts);
+const recentPost = sortedPosts.filter((item) => !item.data.featured);
+const totalPages = Math.ceil(recentPost.length / config.settings.pagination);
+const currentPosts = recentPost.slice(0, config.settings.pagination);
+
+
+//console.log('sortedPosts')
+//console.log(sortedPosts)
+//console.log('currentPosts')
+//console.log(currentPosts)
+////console.log(product_folder)
+
+import { getCollection } from 'astro:content';
+
+const { currentLocale } = Astro;
+const fallbackLang = 'es';
+
+export async function getLocalizedEntry(collection: string, slug: string, locale: string, fallbackLocale = 'es') {
+  const entries = await getCollection(collection);
+  const localized = entries.find(entry => entry.slug === `${locale}/${slug}`);
+  if (localized) return localized;
+
+  return entries.find(entry => entry.slug === `${fallbackLocale}/${slug}`);
+}
+
+const products = await getLocalizedEntry("products", "index", currentLocale);
+
+//const products = await getEntryBySlug("products", "-index");
+
+console.log('products')
+console.log(products)
+
+
+const { title, page_title, product_list } = products.data;
+
+// console.log('title')
+// console.log(title)
+// console.log(page_title)
+// console.log(product_list)
+
+const page_data = {
+  ...products.data,
+  content: products.body,
+};
+// console.log('products')
+// console.log(products)
+
+// console.log('page_data')
+// console.log(page_data)
+
+export async function getStaticPaths() {
+  return [{ params: { lang: 'es' } }, { params: { lang: 'en' } }]
+}
+
+---
+
+<Base
+  title={products.data.title}
+  meta_title={products.data.meta_title}
+  description={products.data.description}
+  image={products.data.image}
+>
+  <Shape />
+  <section class="page-hero pb-4 pt-16">
+    <div class="container">
+      <PageHeader page_data={page_data} />
+    </div>
+  </section>
+  <!-- products -->
+  <section class="section mt-12 pt-0">
+    <ProductsExperiencesProducts/>
+  </section>
+  <section class="border border-red-700 section mx-4 md:mx-10 lg:mx-20 mt-12">
+    <ProductsList 
+      products={currentPosts} 
+      product_list={product_list}
+    />
+    <Pagination
+      section={product_folder}
+      currentPage={1}
+      totalPages={totalPages}
+    />
+  </section>
+  {/*
+  <Faq client:load data={products.data} />
+   */}
+
+</Base>

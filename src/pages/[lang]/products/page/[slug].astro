@@ -1,0 +1,96 @@
+---
+import PageHeader from "@components/PageHeader.astro";
+import Shape from "@components/Shape.astro";
+import ProductsList from "@components/products/ProductsList.astro";
+import config from "@config/config.json";
+import Base from "@layouts/Base.astro";
+import Pagination from "@layouts/components/Pagination.astro";
+import { getEntryBySlug } from "astro:content";
+
+import productsJson from "@data/products.json";
+
+export async function getStaticPaths() {
+  const locales = ['es', 'en'];
+  const posts = productsJson.filter((product) => !product.featured);
+  const totalPages = Math.ceil(posts.length / config.settings.pagination);
+  const paths = [];
+
+  for (const lang of locales) {
+    for (let i = 1; i <= totalPages; i++) {
+      paths.push({
+        params: {
+          lang,
+          slug: i.toString(),
+        },
+      });
+    }
+  }
+
+  return paths;
+}
+
+// Obtener metadata desde -index.mdx (solo este archivo se permite)
+const blogIndex = await getEntryBySlug<any, string>(
+  config.settings.product_folder,
+  "-index"
+);
+
+const products = await getEntryBySlug("products", "-index");
+const { title, page_title, product_list } = products.data;
+
+const { slug } = Astro.params;
+const { product_folder } = config.settings;
+
+// Mapear productos desde JSON
+const posts = productsJson.map((product) => ({
+  data: product,
+  slug: `product-${product.id_product}`,
+}));
+
+// Filtrar productos no destacados
+const recentProduct = posts.filter((item) => !item.data.featured);
+
+// Paginación
+const totalPages = Math.ceil(recentProduct.length / config.settings.pagination);
+const currentPage = slug && !isNaN(Number(slug)) ? Number(slug) : 1;
+const indexOfLastProduct = currentPage * config.settings.pagination;
+const indexOfFirstProduct = indexOfLastProduct - config.settings.pagination;
+const currentProducts = recentProduct.slice(indexOfFirstProduct, indexOfLastProduct);
+
+// console.log('currentProducts')
+// console.log(currentProducts)
+
+
+// Metadata para PageHeader
+const page_data = {
+  index_title: blogIndex.data.title,
+  slug: `page / ${slug}`,
+  index_path: `${config.settings.product_folder}`
+};
+
+---
+
+<Base
+  title={blogIndex.data.title}
+  meta_title={blogIndex.data.meta_title}
+  description={blogIndex.data.description}
+  image={blogIndex.data.image}
+>
+  <Shape />
+  <section class="page-hero pt-16">
+    <div class="container">
+      <PageHeader page_data={page_data} />
+    </div>
+  </section>
+  <section class="section mx-4 md:mx-10 lg:mx-20 mt-12">
+    <ProductsList 
+      products={currentProducts} 
+      product_list={product_list}
+    />
+    <Pagination
+      section={product_folder}
+      totalPages={totalPages}
+      currentPage={currentPage}
+    />
+  </section>
+</Base>

@@ -18,7 +18,7 @@ export const LANGUAGES: Record<
 };
 
 export const defaultLang = 'es';
-export const showDefaultLang = false;
+export const showDefaultLang = true;
 
 export const ui = {
 	es: {

@@ -1,0 +1,52 @@
+---
+import Base from "@layouts/Base.astro";
+import Banner from "@layouts/components/Banner.astro";
+import KeyFeatures from "@layouts/components/KeyFeatures.astro";
+import Testimonial from "@layouts/components/Testimonial.astro";
+import Service from "@layouts/components/Service.astro";
+import Cta from "@layouts/partials/Cta.astro";
+import { getEntryBySlug } from "astro:content";
+import ProductsExperiencesHome from "@components/products/ProductsExperiencesHome.astro"
+import { getEntry } from "astro:content";
+
+const { currentLocale } = Astro
+const fallbackLocale = 'es';
+let homepage = await getEntry("homepage", currentLocale);
+if (!homepage) {
+  homepage = await getEntry("homepage", fallbackLocale);
+}
+console.log('homepage')
+console.log(homepage)
+
+const home = homepage.data;
+const page_data = {
+  ...home,
+  content: home.body,
+};
+
+//console.log(homepage)
+const { banner, key_features, service, testimonial } = homepage.data;
+
+export async function getStaticPaths() {
+  return [{ params: { lang: 'es' } }, { params: { lang: 'en' } }]
+}
+
+---
+<Base>
+  <div class="-z-50 absolute w-full h-screen bg-no-repeat bg-center lg:bg-cover bg-[url('/images/home-background.jpg')] top-0 opacity-50 ">
+  </div>
+  <!-- banner -->
+  <Banner banner={banner} />
+
+  <!-- Porductos Categorías  -->
+  <ProductsExperiencesHome/>
+
+  <!-- key features -->
+  <KeyFeatures key_features={key_features} />
+  <!-- service -->
+  <Service service={service} />
+  <!-- testimonial -->
+  <Testimonial testimonial={testimonial} />
+  <!-- call to action -->
+  <Cta />
+</Base>

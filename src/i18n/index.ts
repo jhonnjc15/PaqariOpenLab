@@ -6,6 +6,10 @@ const LANG = {
 	SPANISH: 'es',
 };
 
+export function getTranslations(lang: string) {
+  return LANG[lang as keyof typeof LANG] || LANG['es'];
+}
+
 export const getI18N = ({
 	currentLocale = 'es',
 }: {
