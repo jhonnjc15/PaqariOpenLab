@@ -26,6 +26,9 @@ const { pathname } = Astro.url;
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const { currentLocale } = Astro
+
+// console.log('Astro.props.is404')
+// console.log(Astro.props.is404)
 ---
 
 <header  class="header">
@@ -165,13 +168,18 @@ Use the code LEXINGTON30 and <span class="text-gray-400">get a 30% discount on t
       }
       <!-- LanguageSelector and DarkMode button Mobile-->
       <li class="nav-item mt-4 lg:hidden flex flex-row items-center justify-center gap-4	">
-        <LanguageSelector/>
+
+        {!Astro.props.is404 && (
+          <LanguageSelector />
+        )}
         <DarkModeButtonMobile/>
       </li>
     </ul>
     <!-- LanguageSelector and DarkMode button Full page-->
     <div class="order-1 ml-auto hidden items-center md:order-2 md:ml-0 lg:flex">
-      <LanguageSelector/>
+      {!Astro.props.is404 && (
+          <LanguageSelector />
+        )}
       <DarkModeButton/>
     </div>
     

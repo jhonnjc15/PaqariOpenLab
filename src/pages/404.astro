@@ -2,26 +2,30 @@
 import Base from "@layouts/Base.astro";
 import { markdownify } from "@lib/utils/textConverter";
 import { getEntryBySlug } from "astro:content";
-import { getCollection } from "astro:content";
 import { Image } from 'astro:assets';
 import config from "@config/config.json";
 
 const { logo } = config.site;
 
-const entry = await getEntryBySlug("pages", "404");
+const fallbackLocale = 'es';
+const currentLocale = Astro.url.pathname.split('/')[1] || fallbackLocale;
+
+let entry = await getEntryBySlug("pages", `${currentLocale}/404`);
+if (!entry) {
+  entry = await getEntryBySlug("pages", `${fallbackLocale}/404`);
+}
 
 const { Content } = await entry.render();
-//Falta corregir el responsive cuando se rota la pantalla de celular
-export async function getStaticPaths() {
-  return [{ params: { lang: 'es' } }, { params: { lang: 'en' } }]
-}
+
+const homeUrl = `/${currentLocale}/`;
+
 ---
 
-<Base title={entry.data.title}>
+<Base title={entry.data.title} is404={true}>
   <section class="relative section py-10">
     <div class="container">
       <div class="flex min-h-[75vh] items-start justify-center">
-        <div class="text-center">
+        <div class=" text-center">
           <Image
             src="/images/LogoPaqariTransparentePequeño.png"
             class="mb-4 inline"
@@ -31,14 +35,25 @@ export async function getStaticPaths() {
           />
           <h1 class="mb-4" set:html={markdownify(entry.data.title)} />
           <Content />
+
+          <!-- 🔵 Botón para volver al home -->
+          
+          <div class="mt-4 absolute left-1/2 transform -translate-x-1/2 z-50">
+            <a 
+              href={homeUrl}
+              class="inline-block px-6 py-3 rounded-full bg-primary text-white font-semibold shadow-md hover:bg-primary-dark transition"
+              set:html={markdownify(entry.data.home_button)}
+            />
+          </div>
+        
         </div>
       </div>
     </div>
+
     <img
       class="z-0 absolute bottom-0 h-full w-full"
       alt=""
       src="/images/layered-waves-haikei.png"
     />
-    
   </section>
 </Base>

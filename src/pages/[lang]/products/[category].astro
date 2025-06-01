@@ -92,8 +92,8 @@ const currentPosts = recentPost_category.slice(0, config.settings.pagination);
 const products = await getEntryBySlug("products", `-${category}`);
 const { title, page_title, product_list } = products.data;
 
-console.log('products')
-console.log(products)
+// console.log('products')
+// console.log(products)
 const page_data = {
   ...products.data,
   content: products.body,

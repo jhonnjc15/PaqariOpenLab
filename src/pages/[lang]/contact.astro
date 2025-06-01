@@ -15,8 +15,8 @@ if (!entry) {
   entry = await getEntry("contact", fallbackLocale);
 }
 
-console.log('entry')
-console.log(entry)
+// console.log('entry')
+// console.log(entry)
 
 const { title, page_title, form_content_data } = entry.data;
 
@@ -26,8 +26,8 @@ const page_data = {
   ...contact,
   content: contact.body,
 };
-console.log('page_data')
-console.log(page_data)
+// console.log('page_data')
+// console.log(page_data)
 
 
 export async function getStaticPaths() {
