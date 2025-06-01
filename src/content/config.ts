@@ -80,7 +80,7 @@ const productsCollection = defineCollection({
 
 // Export collections
 export const collections = {
-  blog: blogCollection,
-  pages: pagesCollection,
+  //blog: blogCollection,
+  //pages: pagesCollection,
   //products: productsCollection,
 };
