@@ -89,7 +89,17 @@ const currentPosts = recentPost_category.slice(0, config.settings.pagination);
 //console.log(currentPosts)
 //console.log(product_folder)
 
-const products = await getEntryBySlug("products", `-${category}`);
+const fallbackLocale = 'es';
+const { currentLocale } = Astro
+
+// console.log('currentLocale')
+// console.log(currentLocale)
+
+let products = await getEntryBySlug("products", `${currentLocale}/-${category}`);
+if (!products) {
+  products = await getEntryBySlug("products", `${fallbackLocale}/-${category}`);
+}
+
 const { title, page_title, product_list } = products.data;
 
 // console.log('products')

@@ -42,10 +42,14 @@ export async function getStaticPaths() {
 
 const { category, slug } = Astro.params;
 
-const blogIndex = await getEntryBySlug<any, string>(
-  config.settings.product_folder,
-  `-${category}`
-);
+const fallbackLocale = 'es';
+const { currentLocale } = Astro
+
+let blogIndex = await getEntryBySlug("products", `${currentLocale}/-${category}`);
+if (!blogIndex) {
+  blogIndex = await getEntryBySlug("products", `${fallbackLocale}/-${category}`);
+}
+
 const { title, page_title, product_list } = blogIndex.data;
 //console.log(slug)
 //console.log(category)

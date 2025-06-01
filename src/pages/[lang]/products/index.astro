@@ -37,20 +37,16 @@ const currentPosts = recentPost.slice(0, config.settings.pagination);
 //console.log(currentPosts)
 ////console.log(product_folder)
 
-import { getCollection } from 'astro:content';
+const fallbackLocale = 'es';
+const { currentLocale } = Astro
 
-const { currentLocale } = Astro;
-const fallbackLang = 'es';
+// console.log('currentLocale')
+// console.log(currentLocale)
 
-export async function getLocalizedEntry(collection: string, slug: string, locale: string, fallbackLocale = 'es') {
-  const entries = await getCollection(collection);
-  const localized = entries.find(entry => entry.slug === `${locale}/${slug}`);
-  if (localized) return localized;
-
-  return entries.find(entry => entry.slug === `${fallbackLocale}/${slug}`);
+let products = await getEntryBySlug("products", `${currentLocale}/-index`);
+if (!products) {
+  products = await getEntryBySlug("products", `${fallbackLocale}/-index`);
 }
-
-const products = await getLocalizedEntry("products", "index", currentLocale);
 
 //const products = await getEntryBySlug("products", "-index");
 

@@ -8,7 +8,10 @@ import config from "@config/config.json";
 const { logo } = config.site;
 
 const fallbackLocale = 'es';
-const currentLocale = Astro.url.pathname.split('/')[1] || fallbackLocale;
+const { currentLocale } = Astro
+
+// console.log('currentLocale')
+// console.log(currentLocale)
 
 let entry = await getEntryBySlug("pages", `${currentLocale}/404`);
 if (!entry) {

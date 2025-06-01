@@ -1,11 +1,11 @@
 ---
-title: Entertainment
-page_title: Our Entertainment Products
+title: Entretenimiento
+page_title: Nuestros Productos de Entretenimiento
 product_list: 
     title: "Total de Productos"
-    description: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi egestas Werat viverra id et aliquet. vulputate egestas sollicitudin.
+    description: Explora una vibrante selección de productos de entretenimiento diseñados para inspirar alegría y creatividad. Desde juegos hasta contenido multimedia, ofrecemos experiencias que cautivan y entretienen a todo tipo de público.
     product_detail_button:
         label: Más información
 ---
-Entertainment Donec sollicitudin molestie malesda. Donec sollitudin molestie malesuada. Mauris <br />
-pellentesque nec, egestas non nisi. Cras ultricies ligula sed magna
+Nuestra selección de entretenimiento está diseñada para brindar diversión e inspiración a personas de todas las edades. Desde experiencias inmersivas hasta medios digitales innovadores, nuestras ofertas buscan conectar, cautivar y entretener. <br />
+Descubre la alegría del juego y la creatividad a través de nuestras soluciones de entretenimiento cuidadosamente seleccionadas.

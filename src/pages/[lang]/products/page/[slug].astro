@@ -29,14 +29,27 @@ export async function getStaticPaths() {
   return paths;
 }
 
-// Obtener metadata desde -index.mdx (solo este archivo se permite)
-const blogIndex = await getEntryBySlug<any, string>(
-  config.settings.product_folder,
-  "-index"
-);
 
-const products = await getEntryBySlug("products", "-index");
-const { title, page_title, product_list } = products.data;
+const fallbackLocale = 'es';
+const { currentLocale } = Astro
+
+let products = await getEntryBySlug("products", `${currentLocale}/-index`);
+if (!products) {
+  products = await getEntryBySlug("products", `${fallbackLocale}/-index`);
+}
+
+let blogIndex = await getEntryBySlug("products", `${currentLocale}/-index`);
+if (!blogIndex) {
+  blogIndex = await getEntryBySlug("products", `${fallbackLocale}/-index`);
+}
+
+const { title, page_title, product_list } = blogIndex.data;
+
+console.log('blogIndex')
+console.log(blogIndex)
+
+console.log('products')
+console.log(products)
 
 const { slug } = Astro.params;
 const { product_folder } = config.settings;

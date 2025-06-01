@@ -1,10 +1,10 @@
 ---
-title: Productos
-page_title: Nuestros Productos
+title: Products
+page_title: Our Products
 product_list: 
-    title: "Total de Productos"
-    description: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi egestas Werat viverra id et aliquet. vulputate egestas sollicitudin.
+    title: "Total Products"
+    description: Explore our wide range of products organized by category. Each item is thoughtfully designed to deliver educational, scientific, or entertainment value.
     product_detail_button:
-        label: Más información
+        label: Learn more
 ---
-Estos son nuestros productoooooooooos.
+Here are our products. Find the one that best suits your needs and interests. 🚀
