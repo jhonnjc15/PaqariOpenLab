@@ -2,35 +2,42 @@
 import Galeria from "./Galeria.astro";
 
 const { data_by_id } = Astro.props;
-
 ---
-<div class="border-2 border-red-600 flex flex-col lg:flex-row gap-16 items-center">
-    <div class="border-2 border-red-600 p-10">
-      <Galeria id_product={data_by_id.id_product}/>
-    </div>
-    <!-- Product Details -->
-    <div class="flex flex-col gap-4 lg:w-2/4">
-      <div>
-        <span class="text-violet-600 font-semibold">Special Sneaker</span>
-        <h1
-          transition:name={`title-${data_by_id.id_product}`} 
-          class="text-3xl font-bold">
-          { data_by_id.title }
-        </h1>
-      </div>
-      <p class="text-gray-700">
-        { data_by_id.description }
-        { data_by_id.id_product }
-      </p>
-      <h6 class="text-2xl font-semibold">$ 199.00</h6>
-      <div class="flex items-center gap-12">
-        <div class="flex items-center">
-          <button class="bg-gray-200 py-2 px-5 rounded-lg text-violet-800 text-3xl">-</button>
-          <span class="py-4 px-6 rounded-lg">1</span>
-          <button class="bg-gray-200 py-2 px-4 rounded-lg text-violet-800 text-3xl">+</button>
-        </div>
-        <button class="bg-violet-800 text-white font-semibold py-3 px-16 rounded-xl">Add to Cart</button>
-      </div>
-    </div>
+
+<div class="flex flex-col lg:flex-row gap-12 items-start">
+  <!-- Galería -->
+  <div class="w-full lg:w-[480px] shrink-0 border border-gray-200 rounded-xl p-6 shadow-md">
+    <Galeria id_product={data_by_id.id_product} />
   </div>
-  
+
+  <!-- Detalles del producto -->
+  <div class="flex flex-col gap-6 w-full">
+    <div>
+      <span class="text-sm uppercase text-violet-600 font-semibold tracking-wide">
+        {data_by_id.category}
+      </span>
+      <h1 class="text-3xl font-bold mt-2">{data_by_id.title}</h1>
+    </div>
+
+    <p class="text-gray-700 leading-relaxed">
+      {data_by_id.description}
+    </p>
+
+    <ul class="list-disc list-inside text-gray-800 space-y-2">
+      {data_by_id.feature_1 && <li>{data_by_id.feature_1}</li>}
+      {data_by_id.feature_2 && <li>{data_by_id.feature_2}</li>}
+      {data_by_id.feature_3 && <li>{data_by_id.feature_3}</li>}
+    </ul>
+
+    <div class="text-2xl font-semibold text-violet-800">
+      ${data_by_id.price}
+    </div>
+
+    <a 
+      href="/" 
+      class="inline-block bg-violet-800 text-white py-3 px-8 rounded-xl shadow hover:bg-violet-700 transition text-center w-fit"
+    >
+      Contact Us
+    </a>
+  </div>
+</div>

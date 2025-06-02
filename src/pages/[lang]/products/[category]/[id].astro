@@ -9,7 +9,7 @@ import Blockquotek from "@shortcodes/Blockquote";
 import { getEntryBySlug } from "astro:content";
 import ProductPage from "@components/products/ProductPage.astro";
 import products from "@data/products.json"; // Asegúrate que tienes esto en tsconfig `paths`
-
+import PageHeader from "@components/PageHeader.astro";
 
 interface Product {
   data: {
@@ -49,12 +49,16 @@ const data_by_id = products.find(
     product.category.trim().toLowerCase() === category.trim().toLowerCase()
 );
 
-//console.log('data_by_id')
-//console.log(data_by_id)
+console.log('data_by_id')
+console.log(data_by_id)
                                                         
 const { title, meta_title, description, image } = (data_by_id as any)?.data || {};
 // Aqui!!!
 
+const page_data = {
+  ...products.data,
+  content: products.body,
+};
 ---
 <Base
   title={title}
@@ -62,7 +66,9 @@ const { title, meta_title, description, image } = (data_by_id as any)?.data || {
   description={description}
   image={image}
 >
-
+  <div class="container">
+    <PageHeader page_data={page_data} />
+  </div>
   <section class="border border-green-700 section mx-4 md:mx-10 lg:mx-20 mt-12">
     <ProductPage data_by_id={data_by_id}/>
   </section>
