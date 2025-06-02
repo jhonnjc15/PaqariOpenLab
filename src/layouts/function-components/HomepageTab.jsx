@@ -22,13 +22,13 @@ const HomepageTab = ({ homepage_tab: { tab_list, title, description } }) => {
   };
 
   return (
-    <div className="border-2 border-red-500 tab gx-5 row items-center">
+    <div className="tab gx-5 row items-center">
       <div className="lg:col-7 lg:order-2">
         <div className="tab-content">
           {tab_list.map((item, index) => (
             <div
               key={index}
-              className={`border-2 border-blue-500 tab-content-panel ${
+              className={`tab-content-panel ${
                 tab === index ? "active" : undefined
               }`}
               style={{
@@ -39,7 +39,7 @@ const HomepageTab = ({ homepage_tab: { tab_list, title, description } }) => {
               }}
             >
               <img
-                className="border-2 border-green-500 w-full
+                className="w-full
                           h-[300px]      sm:h-[400px]      md:h-[500px]      lg:h-[600px]      xl:h-[700px]
                           object-contain"
                 src={item.image}

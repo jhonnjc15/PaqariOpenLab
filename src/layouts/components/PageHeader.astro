@@ -57,7 +57,7 @@ const { title, index_title, page_title, slug, content, index_path } = page_data 
     </li>
   </ul>
   <h1
-    class="border-2 border-red-500 mb-5 mt-8 text-default"
+    class="mb-5 mt-8 text-default"
     set:html={markdownify(
       page_data?.page_title ? page_data?.page_title : page_data?.title
     )}
