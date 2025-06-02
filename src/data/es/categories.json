@@ -1,0 +1,29 @@
+[
+  {
+    "category_name": "educational",
+    "name": "Educativo",
+    "url": "/products/educational",
+    "image_url": "https://cdn-icons-png.flaticon.com/512/4341/4341160.png",
+    "id_category": 1,
+    "short_description": "Recursos y materiales para apoyar el aprendizaje y la enseñanza.",
+    "long_description": "Esta categoría incluye productos diseñados para facilitar la educación en diversos niveles. Aquí encontrarás libros, software educativo, cursos en línea y herramientas que fomentan el desarrollo del conocimiento y habilidades en distintas áreas."
+  },
+  {
+    "category_name": "entertainment",
+    "name": "Entretenimiento",
+    "url": "/products/entertainment",
+    "image_url": "https://cdn-icons-png.flaticon.com/512/4341/4341139.png",
+    "id_category": 2,
+    "short_description": "Productos para el ocio y el disfrute personal, desde juegos hasta multimedia.",
+    "long_description": "La categoría de entretenimiento abarca una variedad de productos que incluyen videojuegos, películas, música y aplicaciones interactivas. Está diseñada para ofrecer diversión y relax a personas de todas las edades."
+  },
+  {
+    "category_name": "scientific",
+    "name": "Científico",
+    "url": "/products/scientific",
+    "image_url": "https://cdn-icons-png.flaticon.com/512/4341/4341134.png",
+    "id_category": 3,
+    "short_description": "Equipos y recursos para investigación y desarrollo científico.",
+    "long_description": "Esta sección ofrece productos especializados para laboratorios, universidades e instituciones de investigación. Incluye instrumentos de medición, software analítico y materiales para experimentación y estudio científico."
+  }
+]

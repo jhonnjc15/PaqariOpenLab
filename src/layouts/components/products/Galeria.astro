@@ -1,7 +1,14 @@
 ---
 // Parte del servidor (Astro)
 import "photoswipe/style.css";
-import allProducts from "@data/products.json"; // Ajusta la ruta si es necesario
+import productsES from '@data/es/products.json';
+import productsEN from '@data/en/products.json';
+
+const fallbackLocale = 'es';
+const { currentLocale } = Astro
+
+// Selecciona productos según el idioma
+const allProducts = currentLocale === 'en' ? productsEN : productsES;
 
 const { id_product } = Astro.props;
 

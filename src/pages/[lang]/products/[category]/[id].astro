@@ -8,8 +8,15 @@ import { getSinglePage } from "@lib/contentParser.astro";
 import Blockquotek from "@shortcodes/Blockquote";
 import { getEntryBySlug } from "astro:content";
 import ProductPage from "@components/products/ProductPage.astro";
-import products from "@data/products.json"; // Asegúrate que tienes esto en tsconfig `paths`
 import PageHeader from "@components/PageHeader.astro";
+import productsES from '@data/es/products.json';
+import productsEN from '@data/en/products.json';
+
+const fallbackLocale = 'es';
+const { currentLocale } = Astro
+
+// Selecciona productos según el idioma
+const products = currentLocale === 'en' ? productsEN : productsES;
 
 interface Product {
   data: {
@@ -21,13 +28,16 @@ interface Product {
 export async function getStaticPaths() {
   const paths = [];
   const locales = ['es', 'en'];
+
   for (const lang of locales) {
+    const products = lang === 'en' ? productsEN : productsES;
+
     for (const product of products) {
       paths.push({
         params: {
           lang,
           category: product.category,
-          id: product.id_product,
+          id: product.id_product.toString(), // asegúrate que sea string
         },
       });
     }

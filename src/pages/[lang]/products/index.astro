@@ -14,16 +14,28 @@ import Pagination from "@layouts/components/Pagination.astro";
 import { getSinglePage } from "@lib/contentParser.astro";
 import { sortByDate } from "@lib/utils/sortFunctions";
 
-import productsJson from "@data/products.json";
+// Importa ambos archivos estáticos
+import productsES from '@data/es/products.json';
+import productsEN from '@data/en/products.json';
+
+const { currentLocale } = Astro
+const fallbackLocale = 'es';
+
+// Selecciona productos según el idioma
+const json_products = currentLocale === 'en' ? productsEN : productsES;
+
+// Mapea si necesitas un slug u otra transformación
+const posts = json_products.map(product => ({
+  data: product,
+  slug: `product-${product.id_product}`
+}));
+
+//import productsJson from "@data/products.json";
 
 
 const { product_folder } = config.settings; // "blog"
 //const posts = await getSinglePage(product_folder);
 
-const posts = productsJson.map((product) => ({
-  data: product,
-  slug: `product-${product.id_product}`,
-}));
 const sortedPosts = posts;
 //const sortedPosts = sortByDate(posts);
 const recentPost = sortedPosts.filter((item) => !item.data.featured);
@@ -37,8 +49,8 @@ const currentPosts = recentPost.slice(0, config.settings.pagination);
 //console.log(currentPosts)
 ////console.log(product_folder)
 
-const fallbackLocale = 'es';
-const { currentLocale } = Astro
+
+
 
 // console.log('currentLocale')
 // console.log(currentLocale)

@@ -7,15 +7,24 @@ import Base from "@layouts/Base.astro";
 import Pagination from "@layouts/components/Pagination.astro";
 import { getEntryBySlug } from "astro:content";
 
-import productsJson from "@data/products.json";
+import productsES from '@data/es/products.json';
+import productsEN from '@data/en/products.json';
+
+const fallbackLocale = 'es';
+const { currentLocale } = Astro
+
+// Selecciona productos según el idioma
+const json_products = currentLocale === 'en' ? productsEN : productsES;
 
 export async function getStaticPaths() {
   const locales = ['es', 'en'];
-  const posts = productsJson.filter((product) => !product.featured);
-  const totalPages = Math.ceil(posts.length / config.settings.pagination);
   const paths = [];
 
   for (const lang of locales) {
+    const json_products = lang === 'en' ? productsEN : productsES;
+    const posts = json_products.filter((product) => !product.featured);
+    const totalPages = Math.ceil(posts.length / config.settings.pagination);
+
     for (let i = 1; i <= totalPages; i++) {
       paths.push({
         params: {
@@ -29,9 +38,6 @@ export async function getStaticPaths() {
   return paths;
 }
 
-
-const fallbackLocale = 'es';
-const { currentLocale } = Astro
 
 let products = await getEntryBySlug("products", `${currentLocale}/-index`);
 if (!products) {
@@ -55,7 +61,7 @@ const { slug } = Astro.params;
 const { product_folder } = config.settings;
 
 // Mapear productos desde JSON
-const posts = productsJson.map((product) => ({
+const posts = json_products.map((product) => ({
   data: product,
   slug: `product-${product.id_product}`,
 }));

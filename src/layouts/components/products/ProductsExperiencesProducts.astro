@@ -1,12 +1,16 @@
 ---
 import config from "@config/config.json";
-import categories_data from "@data/categories.json"
 import { getRelativeLocaleUrl } from "astro:i18n";
 import { humanize, plainify, slugify } from "@lib/utils/textConverter";
 const { summary_length } = config.settings;
+import categoriesES from '@data/es/categories.json';
+import categoriesEN from '@data/en/categories.json';
 
 const { currentLocale } = Astro
+const fallbackLocale = 'es';
 
+// Selecciona productos según el idioma
+const categories_data = currentLocale === 'en' ? categoriesES : categoriesEN;
 ---
 
 

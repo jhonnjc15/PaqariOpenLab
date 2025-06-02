@@ -9,16 +9,28 @@ import Pagination from "@layouts/components/Pagination.astro";
 import { getSinglePage } from "@lib/contentParser.astro";
 import { sortByDate } from "@lib/utils/sortFunctions";
 import { getEntryBySlug } from "astro:content";
-import categories_data from "@data/categories.json"
 
-import productsJson from "@data/products.json";
+import categoriesES from '@data/es/categories.json';
+import categoriesEN from '@data/en/categories.json';
 
+import productsES from '@data/es/products.json';
+import productsEN from '@data/en/products.json';
+
+const fallbackLocale = 'es';
+const { currentLocale } = Astro
+
+const categories_data = currentLocale === 'en' ? categoriesES : categoriesEN;
+const productsJson = currentLocale === 'en' ? productsEN : productsES;
 
 export async function getStaticPaths() {
   const paths = [];
   const locales = ['es', 'en'];
+
   for (const lang of locales) {
-    categories_data.forEach((category) => {
+    const categories_data = lang === 'en' ? categoriesEN : categoriesES;
+    const productsJson = lang === 'en' ? productsEN : productsES;
+
+    for (const category of categories_data) {
       const filtered = productsJson.filter(
         (product) => product.category === category.category_name && !product.featured
       );
@@ -34,16 +46,13 @@ export async function getStaticPaths() {
           },
         });
       }
-    });
+    }
   }
 
   return paths;
 }
 
 const { category, slug } = Astro.params;
-
-const fallbackLocale = 'es';
-const { currentLocale } = Astro
 
 let blogIndex = await getEntryBySlug("products", `${currentLocale}/-${category}`);
 if (!blogIndex) {

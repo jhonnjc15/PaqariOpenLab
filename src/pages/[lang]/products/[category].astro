@@ -1,9 +1,6 @@
 ---
 import type { GetStaticPaths } from "astro";
-import categories_data from "@data/categories.json"
 import type { List } from "postcss/lib/list";
-
-
 import PageHeader from "@components/PageHeader.astro";
 import Shape from "@components/Shape.astro";
 import Base from "@layouts/Base.astro";
@@ -17,7 +14,20 @@ import Pagination from "@layouts/components/Pagination.astro";
 import { getSinglePage } from "@lib/contentParser.astro";
 import { sortByDate } from "@lib/utils/sortFunctions";
 
-import productsJson from "@data/products.json";
+import categoriesES from '@data/es/categories.json';
+import categoriesEN from '@data/en/categories.json';
+
+import productsES from '@data/es/products.json';
+import productsEN from '@data/en/products.json';
+
+const fallbackLocale = 'es';
+const { currentLocale } = Astro
+
+// Selecciona productos según el idioma
+const categories_data = currentLocale === 'en' ? categoriesES : categoriesEN;
+
+// Selecciona productos según el idioma
+const json_products = currentLocale === 'en' ? productsEN : productsES;
 
 
 interface Category {
@@ -51,16 +61,18 @@ if (category) {
 
 export const getStaticPaths = () => {
   const locales = ['es', 'en'];
-  const allCategories = categories_data.map((category) => category.category_name);
-
+  
   const paths = [];
 
   for (const lang of locales) {
-    for (const category of allCategories) {
+    // Selecciona la data según el idioma
+    const categories_data = lang === 'en' ? categoriesEN : categoriesES;
+
+    for (const category of categories_data) {
       paths.push({
         params: {
           lang,
-          category,
+          category: category.category_name, // o la propiedad que corresponda
         }
       });
     }
@@ -75,7 +87,7 @@ export const getStaticPaths = () => {
 const { product_folder } = config.settings; // "blog"
 //const posts = await getSinglePage(product_folder);
 
-const posts = productsJson.map((product) => ({
+const posts = json_products.map((product) => ({
   data: product,
   slug: `product-${product.id_product}`,
 }));
@@ -89,8 +101,6 @@ const currentPosts = recentPost_category.slice(0, config.settings.pagination);
 //console.log(currentPosts)
 //console.log(product_folder)
 
-const fallbackLocale = 'es';
-const { currentLocale } = Astro
 
 // console.log('currentLocale')
 // console.log(currentLocale)
