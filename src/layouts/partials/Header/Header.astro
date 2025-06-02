@@ -7,6 +7,7 @@ import { getRelativeLocaleUrl } from "astro:i18n";
 import { getLangFromUrl, useTranslations } from '@i18n/utils';
 import DarkModeButton from "./DarkModeButton.astro";
 import DarkModeButtonMobile from "./DarkModeButtonMobile.astro";
+import ChevronIcon from "./Chevron.astro"
 
 export interface ChildNavigationLink {
   name: string;
@@ -29,6 +30,19 @@ const { currentLocale } = Astro
 
 // console.log('Astro.props.is404')
 // console.log(Astro.props.is404)
+
+function isActive(pathname: string, baseUrl: string, locale: string) {
+  const cleanPath = pathname.replace(/\/$/, '');
+  const expectedBase = `/${locale}${baseUrl === '/' ? '' : baseUrl}`;
+
+  // Si es la home
+  if (baseUrl === '/') {
+    return cleanPath === `/${locale}`;
+  }
+
+  // Si es otra sección
+  return cleanPath.startsWith(expectedBase);
+}
 ---
 
 <header  class="header">
@@ -71,28 +85,25 @@ const { currentLocale } = Astro
         main.map((menu) => (
           <>
             {menu.hasChildren ? (
+              //Nav con hijos (Products/)
               <li
                 class="nav-item nav-dropdown group relative cursor-pointer gap-0"
                 id="dropdown-button"
               >
                 <a
-                  href={getRelativeLocaleUrl(currentLocale ?? '',`${menu.url}`)}
-                  class={`nav-link peer inline-flex items-center mx-2 px-[8px] ${
-                    (
-                      (pathname === `${menu.url}/` || pathname === menu.url || pathname.startsWith(`${menu.url}/`)) ||
-                      (currentLocale === 'en' && (pathname === `/en${menu.url}/` || pathname === `/en${menu.url}` || pathname.startsWith(`/en${menu.url}/`)))
-                    ) &&
-                    "active"
+                  href={getRelativeLocaleUrl(currentLocale ?? '', menu.url)}
+                  class={`nav-link inline-block lg:block mx-4 ${
+                    isActive(pathname, menu.url, currentLocale) ? "active" : ""
                   }`}
                 >
                   {t(`nav.${menu.name.toLowerCase()}`)}
                 </a>
-                <div class={`nav-link peer-hover:text-primary inline-flex items-center align-middle px-0 lg:absolute inset-y-0 lg:-right-1`}
+                <div class={`nav-link peer-hover:text-primary hover:text-primary inline-flex items-center align-middle px-0 lg:absolute inset-y-0 lg:-right-1`}
                 >
-                  <svg class="h-4 w-4 fill-current " viewBox="0 0 20 20">
-                    <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
-                  </svg>
+                  <ChevronIcon />
                 </div>
+                
+
                 {/* Dropdown cambio de posicion (nav-dropdown-list) tamaño, color de fondo, etc*/}
                 <ul
                   id="dropdown"
@@ -103,60 +114,55 @@ const { currentLocale } = Astro
                   {menu.children?.map((child) => (
                     <li class="nav-dropdown-item">
                       <a
-                        href={getRelativeLocaleUrl(currentLocale ?? '',`${child.url}`)}
+                        href={getRelativeLocaleUrl(currentLocale ?? '', child.url)}
                         class={`py-2 lg:pt-3 lg:h-[85px] items-center nav-dropdown-link block ${
-                          (
-                            (pathname === `${child.url}/` || pathname === child.url) ||
-                            (currentLocale === 'en' && (pathname === `/en${child.url}/` || pathname === `/en${child.url}`))
-                          ) &&
-                          "text-primary"
+                          isActive(pathname, child.url, currentLocale ?? '') ? 'text-primary' : ''
                         }`}
                       >
                         <div class="text-center flex flex-row gap-2 lg:justify-start justify-center items-center ">
                           {t(`nav.${child.name.toLowerCase()}`)}
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                          <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
-                        </svg>
+                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
+                          </svg>
                         </div>
                         <p class="hidden lg:mt-1 lg:text-gray-500 lg:inline-block">
                           Trending wallpapers for any kind of tatse
                         </p>
                       </a>
-
                     </li>
                   ))}
                   </div>
                   <div class="hidden lg:w-1/2 lg:h-full lg:inline-block">
-                    <div class="bg-black  lg:p-5 rounded-xl space-y-4 h-full flex flex-col justify-center ">
+                    <div class="bg-black lg:p-5 rounded-xl space-y-4 h-full flex flex-col justify-center ">
                       <div >
                         <p class="text-xl text-white tracking-tight text-balance">
 Use the code LEXINGTON30 and <span class="text-gray-400">get a 30% discount on the bundle.</span> 
                         </p>
                       </div>
                       <a 
-                        href={getRelativeLocaleUrl(currentLocale ?? '',`/products`)}
-                        class="nav-link items-center text-sm group active:bg-gray-100 active:text-gray-900/60 active:transition-none border font-medium flex flex-row justify-center gap-2 outline-offset-2 px-6 py-3 transition w-full bg-white hover:bg-gray-50 text-black rounded-lg">
-                        <p>Products</p>
+                        href={getRelativeLocaleUrl(currentLocale ?? '', `/products`)}
+                        class={`nav-link items-center text-sm group active:bg-gray-100 active:text-gray-900/60 active:transition-none border font-medium flex flex-row justify-center gap-2 outline-offset-2 px-6 py-3 transition w-full bg-white hover:bg-gray-50 text-black rounded-lg ${
+                          isActive(pathname, '/products', currentLocale ?? '') ? 'text-primary border-primary' : ''
+                        }`}
+                      >
+                        <p>{t(`nav.${menu.name.toLowerCase()}`)}</p>
                         <span>
                           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
                           </svg>
                         </span> 
-                      </a>  
+                      </a>
                     </div>
                   </div>
                 </ul>
               </li>
             ) : (
+              //Nav sin hijos
               <li class="nav-item">
                 <a
-                  href={getRelativeLocaleUrl(currentLocale ?? '',`${menu.url}`)}
+                  href={getRelativeLocaleUrl(currentLocale ?? '', menu.url)}
                   class={`nav-link inline-block lg:block mx-4 ${
-                    (
-                      (pathname === `${menu.url}/` || pathname === menu.url) ||
-                      (currentLocale === 'en' && (pathname === `/en${menu.url}/` || pathname === `/en${menu.url}`))
-                    ) &&
-                    "active"
+                    isActive(pathname, menu.url, currentLocale) ? "active" : ""
                   }`}
                 >
                   {t(`nav.${menu.name.toLowerCase()}`)}
