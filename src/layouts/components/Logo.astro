@@ -10,37 +10,49 @@ const {
   logo_height,
   logo_text,
   title,
-}: {
-  logo: string;
-  logo_width: any;
-  logo_height: any;
-  logo_text: string;
-  title: string;
 } = config.site;
 
+// Ruta del logo para modo oscuro
+const logoDark = '/images/PqOL_logo_white.png';
 
-const { currentLocale } = Astro
+const { currentLocale } = Astro;
 ---
 
-<a 
-  href={getRelativeLocaleUrl(currentLocale ?? '',`/`)} 
-  class="navbar-brand block">
-  {
-    src || logo ? (
+<a
+  href={getRelativeLocaleUrl(currentLocale ?? '', `/`)}
+  class="navbar-brand block"
+>
+  {src || logo ? (
+    <>
+      <!-- Logo modo claro -->
       <Image
-        width={logo_width.replace("px", "") * 2}
-        height={logo_height.replace("px", "") * 2}
         src={src ? src : logo}
         alt={title}
+        width={Number(logo_width.replace("px", ""))}
+        height={Number(logo_height.replace("px", ""))}
+        class="block dark:hidden"
         style={{
-          height: logo_height.replace("px", "") + "px",
-          width: logo_width.replace("px", "") + "px",
+          height: logo_height,
+          width: logo_width,
         }}
       />
-    ) : logo_text ? (
-      logo_text
-    ) : (
-      title
-    )
-  }
+
+      <!-- Logo modo oscuro -->
+      <Image
+        src={logoDark}
+        alt={title}
+        width={Number(logo_width.replace("px", ""))}
+        height={Number(logo_height.replace("px", ""))}
+        class="hidden dark:block"
+        style={{
+          height: logo_height,
+          width: logo_width,
+        }}
+      />
+    </>
+  ) : logo_text ? (
+    logo_text
+  ) : (
+    title
+  )}
 </a>

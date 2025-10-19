@@ -157,7 +157,6 @@ const Form = ({ form_content_data }) => {
             {form_content_data?.name.title}
           </label>
           <input
-            type="text"
             className={`form-control-paqari ${
               typeof errors.fullName?.type !== "string"
                 ? ""
@@ -179,7 +178,6 @@ const Form = ({ form_content_data }) => {
             {form_content_data?.email.title}
           </label>
           <input
-            type="text"
             className={`form-control-paqari ${
               typeof errors.email?.type !== "string"
                 ? ""

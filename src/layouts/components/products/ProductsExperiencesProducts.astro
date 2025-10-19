@@ -16,7 +16,7 @@ const categories_data = currentLocale === 'en' ? categoriesES : categoriesEN;
 
 <div class="border border-red-700 max-w-7xl mx-auto px-6 md:px-12 xl:px-6">
     <div
-    class=" my-8 bg-offset grid divide-x divide-y divide-gray-200 lg:divide-none overflow-hidden rounded-3xl text-gray-600 sm:grid-cols-1 lg:grid-cols-3 lg:divide-y-0 xl:grid-cols-3"
+    class=" my-8 bg-offset grid divide-x divide-y divide-gray-200 lg:divide-none overflow-hidden rounded-3xl sm:grid-cols-1 lg:grid-cols-3 lg:divide-y-0 xl:grid-cols-3"
     >
     {categories_data?.map((data) => (
     <div class="max-h-96 min-h-64 group relative transition hover:z-[1] hover:shadow-2xl hover:shadow-gray-600/10 ">
@@ -31,11 +31,11 @@ const categories_data = currentLocale === 'en' ? categoriesES : categoriesEN;
 
         <div class="space-y-2">
           <h5
-            class="text-xl font-semibold text-gray-700 transition group-hover:text-secondary"
+            class="text-xl font-semibold transition group-hover:text-secondary"
           >
             {data.name}
           </h5>
-          <p class="h-[70px] block font-sans text-sm antialiased font-normal leading-normal text-gray-700 opacity-75 overflow-hidden">
+          <p class="h-[70px] block font-sans text-sm antialiased group-hover:text-secondary font-normal leading-normal opacity-75 overflow-hidden">
             {plainify(data.short_description?.slice(0, Number(summary_length)))}
             {data.short_description?.length > summary_length ? '...' : ''}
           </p>
