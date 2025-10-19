@@ -1,0 +1,97 @@
+---
+/**
+ * ThemeToggle.astro
+ * Componente único para cambiar entre modo claro y oscuro.
+ * - Funciona en múltiples instancias (desktop y mobile).
+ * - Persiste con localStorage.
+ * - Compatible con View Transitions (astro:after-swap).
+ * - Accesible (aria-label, aria-pressed).
+ * 
+ * 🔧 Requiere en Base.astro el script anti-flicker:
+ *   (para aplicar la clase .dark antes del primer render)
+ */
+const { class: extraClass = "" } = Astro.props;
+---
+
+<button
+  class={`outline-none bg-default flex relative text-heading-2 rounded-full m-2 p-1 lg:p-2 transition-colors duration-300 ${extraClass}`}
+  aria-label="Toggle color scheme"
+  aria-pressed="false"
+  data-theme-toggle
+>
+  <!-- Ícono Sol (modo claro) -->
+  <svg xmlns="http://www.w3.org/2000/svg"
+       viewBox="0 0 24 24"
+       fill="none"
+       stroke="currentColor"
+       stroke-width="1.5"
+       stroke-linecap="round"
+       stroke-linejoin="round"
+       class="w-6 h-6 dark:hidden">
+    <path d="M12 3v2.25M18.364 5.636l-1.591 1.591M21 12h-2.25M18.364 18.364l-1.591-1.591M12 18.75V21M5.636 18.364l-1.591 1.591M3 12h2.25M7.886 7.886L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z"/>
+  </svg>
+
+  <!-- Ícono Luna (modo oscuro) -->
+  <svg xmlns="http://www.w3.org/2000/svg"
+       viewBox="0 0 24 24"
+       fill="none"
+       stroke="currentColor"
+       stroke-width="1.5"
+       stroke-linecap="round"
+       stroke-linejoin="round"
+       class="w-6 h-6 hidden dark:inline">
+    <path d="M21.752 15.002A9.718 9.718 0 0118 15.75
+             c-5.385 0-9.75-4.365-9.75-9.75
+             0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25
+             C3 16.635 7.365 21 12.75 21
+             a9.753 9.753 0 009.002-5.998z"/>
+  </svg>
+
+  <span class="sr-only">Switch theme</span>
+</button>
+
+<script is:inline>
+  (function() {
+    const LS_KEY = "appTheme";
+
+    /** Aplica el tema y actualiza almacenamiento */
+    function setTheme(theme) {
+      const root = document.documentElement;
+      const isDark = theme === "dark";
+      root.classList.toggle("dark", isDark);
+      root.style.colorScheme = isDark ? "dark" : "light";
+      localStorage.setItem(LS_KEY, theme);
+    }
+
+    /** Sincroniza el aria-pressed en todos los botones */
+    function syncButtons() {
+      const isDark = document.documentElement.classList.contains("dark");
+      document.querySelectorAll("[data-theme-toggle]").forEach(btn => {
+        btn.setAttribute("aria-pressed", isDark ? "true" : "false");
+      });
+    }
+
+    /** Conecta eventos de todos los botones */
+    function wireThemeToggles() {
+      document.querySelectorAll("[data-theme-toggle]").forEach(btn => {
+        if (btn.__wired) return; // evita doble binding
+        btn.__wired = true;
+
+        btn.addEventListener("click", e => {
+          e.preventDefault();
+          const isDark = document.documentElement.classList.contains("dark");
+          setTheme(isDark ? "light" : "dark");
+          syncButtons();
+        });
+      });
+
+      syncButtons(); // estado inicial
+    }
+
+    // Ejecutar al montar
+    wireThemeToggles();
+
+    // Reaplicar listeners tras View Transitions
+    document.addEventListener("astro:after-swap", wireThemeToggles);
+  })();
+</script>

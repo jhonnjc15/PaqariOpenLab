@@ -5,9 +5,8 @@ import menu from "@config/menu.json";
 import LanguageSelector from "../Header/LanguageSelector.astro"
 import { getRelativeLocaleUrl } from "astro:i18n";
 import { getLangFromUrl, useTranslations } from '@i18n/utils';
-import DarkModeButton from "./DarkModeButton.astro";
-import DarkModeButtonMobile from "./DarkModeButtonMobile.astro";
 import ChevronIcon from "./Chevron.astro"
+import ThemeToggle from "./ThemeToggle.astro";
 
 export interface ChildNavigationLink {
   name: string;
@@ -98,7 +97,7 @@ function isActive(pathname: string, baseUrl: string, locale: string) {
                 >
                   {t(`nav.${menu.name.toLowerCase()}`)}
                 </a>
-                <div class={`nav-link peer-hover:text-primary hover:text-primary inline-flex items-center align-middle px-0 lg:absolute inset-y-0 lg:-right-1`}
+                <div class={`border border-red-700 nav-link peer-hover:text-primary hover:text-primary inline-flex items-center align-middle px-0 lg:absolute inset-y-0 lg:-right-1`}
                 >
                   <ChevronIcon />
                 </div>
@@ -178,7 +177,7 @@ Use the code LEXINGTON30 and <span class="text-gray-400">get a 30% discount on t
         {!Astro.props.is404 && (
           <LanguageSelector />
         )}
-        <DarkModeButtonMobile/>
+        <ThemeToggle /> 
       </li>
     </ul>
     <!-- LanguageSelector and DarkMode button Full page-->
@@ -186,7 +185,7 @@ Use the code LEXINGTON30 and <span class="text-gray-400">get a 30% discount on t
       {!Astro.props.is404 && (
           <LanguageSelector />
         )}
-      <DarkModeButton/>
+        <ThemeToggle />
     </div>
     
   </nav>

@@ -26,12 +26,12 @@ const page_data = {
   ...about.data,
   content: about.body,
 };
-const video_path = "/images/background-video.mp4"
 
 export async function getStaticPaths() {
   return [{ params: { lang: 'es' } }, { params: { lang: 'en' } }]
 }
 
+const video_path = "/images/background-video.mp4"
 ---
 
 <Base
@@ -40,7 +40,18 @@ export async function getStaticPaths() {
   description={about.data.description}
   image={about.data.image}
 >
+  {/*
+  <div class="-z-50 absolute w-full h-screen bg-no-repeat bg-center lg:bg-cover bg-[url('/images/home-background.jpg')] top-0 opacity-50 ">
+  </div>
+  */}
+  
+  <div class="-z-50 absolute w-full h-screen bg-no-repeat bg-center bg-[length:130%_100%] sm:bg-[length:115%_100%] lg:bg-cover bg-[url('/images/home-background.jpg')] top-0 opacity-50">
+</div>
+  
+  {/* 
   <BackgroundVideo src={video_path}/>
+  */}
+
   <section class="page-hero py-16">
     <div class="container">
       <span class="w-4/12 lg:w-2/12 aspect-square bg-gradient-to-tr from-secondary to-green-400 absolute -top-5 lg:left-0 rounded-full skew-y-12 blur-2xl opacity-40 skew-x-12 rotate-90"></span>
@@ -50,15 +61,22 @@ export async function getStaticPaths() {
       <div class="page-hero-content mx-auto max-w-[768px] text-center">
         <PageHeader page_data={page_data} />
       </div>
+    </div>
+  </section>
       {/* 
       <CounterComponent counter={counter} />
       */}
       <!-- benifit -->
+      {/*
       <!-- gellary -->
       <Gallery gallery={gallery} />
       <!-- our works -->
       <Works features={features} />
+      */}
       <!-- our members -->
+    <!-- Sección de miembros -->
+  <section class="relative bg-white dark:bg-gray-900 py-16">
+    <div class="container">
       <OurMembers members={members} />
     </div>
   </section>

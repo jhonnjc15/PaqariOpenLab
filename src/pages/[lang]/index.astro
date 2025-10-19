@@ -8,6 +8,8 @@ import Cta from "@layouts/partials/Cta.astro";
 import { getEntryBySlug } from "astro:content";
 import ProductsExperiencesHome from "@components/products/ProductsExperiencesHome.astro"
 import { getEntry } from "astro:content";
+import BackgroundVideo from "@components/BackgroundVideo.astro";
+
 
 const { currentLocale } = Astro
 const fallbackLocale = 'es';
@@ -30,21 +32,25 @@ const { banner, key_features, service, testimonial } = homepage.data;
 export async function getStaticPaths() {
   return [{ params: { lang: 'es' } }, { params: { lang: 'en' } }]
 }
-
+const video_path = "/images/background-video.mp4"
 ---
 <Base>
+  {/*
   <div class="-z-50 absolute w-full h-screen bg-no-repeat bg-center lg:bg-cover bg-[url('/images/home-background.jpg')] top-0 opacity-50 ">
   </div>
+  */}
+  <BackgroundVideo src={video_path}/>
   <!-- banner -->
   <Banner banner={banner} />
 
   <!-- Porductos Categorías  -->
   <ProductsExperiencesHome/>
-
+  {/* 
   <!-- key features -->
   <KeyFeatures key_features={key_features} />
   <!-- service -->
   <Service service={service} />
+  */}  
   <!-- testimonial -->
   <Testimonial testimonial={testimonial} />
   <!-- call to action -->
