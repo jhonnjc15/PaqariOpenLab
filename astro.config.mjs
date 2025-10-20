@@ -19,8 +19,8 @@ export default defineConfig({
       entrypoint: 'astro/assets/services/noop'
     }
   },
-  site: "https://jhonnjc15.github.io/PaqariOpenLab/",
-  base: "/PaqariOpenLab/",
+  site: "https://jhonnjc15.github.io/",
+  base: "/",
   //trailingSlash: config.site.trailing_slash ? "always" : "never",
   integrations: [
     react({
