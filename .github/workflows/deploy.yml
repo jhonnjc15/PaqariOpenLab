@@ -19,10 +19,9 @@ jobs:
 
       - name: Install, build, and upload your site
         uses: withastro/action@v3
-        # with:
-          # path: . # (opcional) Si tu proyecto está en la raíz
-          # node-version: 20
-          # package-manager: npm@latest # o pnpm/yarn si usas otro gestor
+        with:
+          node-version: 20
+          package-manager: yarn@1.22.19
 
   deploy:
     needs: build
