@@ -1,5 +1,5 @@
 ---
-title: Contanto
+title: Contacto
 page_title: Ponte en contacto con nuestro equipo.
 form_content_data:
   name: 

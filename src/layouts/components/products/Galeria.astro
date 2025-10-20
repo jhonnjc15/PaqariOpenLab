@@ -36,13 +36,13 @@ const galleryImages = images.filter(img => !img.isMain);
         <img
           transition:name={`img-${id_product}`}
           src={mainImage.src}
-          class="w-full h-full aspect-square object-contain rounded-xl"
+          class="border border-black w-full h-full aspect-square object-contain rounded-xl"
           alt=""
         />
       </a>
     )}
   </div>
-  <div class="border-1 border-black-600 rounded-1 flex flex-row gap-1 h-24">
+  <div class="rounded-1 flex flex-row gap-1 h-24">
     {galleryImages.map((image) => (
       <a
         href={image.src}
@@ -51,7 +51,7 @@ const galleryImages = images.filter(img => !img.isMain);
       >
         <img 
           src={image.src}
-          class="w-24 h-24 rounded-md cursor-pointer object-contain"
+          class="border border-black w-24 h-24 rounded-md cursor-pointer object-contain"
           alt=""
         />
       </a>

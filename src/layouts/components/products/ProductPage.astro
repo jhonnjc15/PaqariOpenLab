@@ -13,29 +13,29 @@ const { data_by_id } = Astro.props;
   <!-- Detalles del producto -->
   <div class="flex flex-col gap-6 w-full">
     <div>
-      <span class="text-sm uppercase text-violet-600 font-semibold tracking-wide">
+      <span class="text-sm uppercase font-semibold tracking-wide">
         {data_by_id.category}
       </span>
       <h1 class="text-3xl font-bold mt-2">{data_by_id.title}</h1>
     </div>
 
-    <p class="text-gray-700 leading-relaxed">
+    <p class="leading-relaxed ">
       {data_by_id.description}
     </p>
 
-    <ul class="list-disc list-inside text-gray-800 space-y-2">
+    <ul class="list-disc list-inside space-y-2">
       {data_by_id.feature_1 && <li>{data_by_id.feature_1}</li>}
       {data_by_id.feature_2 && <li>{data_by_id.feature_2}</li>}
       {data_by_id.feature_3 && <li>{data_by_id.feature_3}</li>}
     </ul>
 
-    <div class="text-2xl font-semibold text-violet-800">
+    <div class="text-2xl font-semibold">
       ${data_by_id.price}
     </div>
 
     <a 
       href="/" 
-      class="inline-block bg-violet-800 text-white py-3 px-8 rounded-xl shadow hover:bg-violet-700 transition text-center w-fit"
+      class="inline-block bg-primary py-3 px-8 rounded-xl shadow hover:bg-secondary transition text-center w-fit"
     >
       Contact Us
     </a>
