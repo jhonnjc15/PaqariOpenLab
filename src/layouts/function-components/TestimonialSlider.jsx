@@ -13,7 +13,7 @@ const TestimonialSlider = ({ list }) => {
   const paginationRef = useRef(null);
 
   return (
-    <div className="border border-red-700 reviews-carousel relative">
+    <div className="reviews-carousel relative">
       <Swiper
         pagination={{
           type: "bullets",
