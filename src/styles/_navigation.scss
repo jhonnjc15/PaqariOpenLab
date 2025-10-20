@@ -11,18 +11,56 @@ input#nav-toggle:checked ~ #nav-menu {
   @apply block lg:flex border-b dark:border-gray-600 border-primary lg:border-0 ;
 }
 
+/* HEADER BASE */
 .header {
-  @apply sticky top-0  z-50 bg-default px-5 sm:px-10 py-6 transition-all duration-300 bg-transparent;
+  @apply sticky top-0 z-50 bg-transparent px-5 sm:px-10 py-6 transition-all duration-300;
+}
 
-  &-sticky {
-    @apply bg-default opacity-95 dark:border-b dark:border-gray-600 shadow;
+/* NAVBAR BASE */
+.navbar {
+  @apply relative flex flex-wrap items-center justify-between bg-transparent py-2;
+}
+
+/* === EFECTOS DE MOVIMIENTO SOLO EN PANTALLAS XL Y SUPERIORES === */
+@media (min-width: 1280px) {
+  /* desplazamiento de los elementos */
+  .header-sticky .logo-container {
+    @apply translate-x-[80%];
+  }
+
+  .header-sticky .menu-container {
+    @apply -translate-x-[80%];
+  }
+
+  /* estilo visual del navbar al hacer scroll */
+  .header-sticky .navbar {
+    @apply border-[#217276] shadow-[0_4px_20px_rgba(0,0,0,0.15)]
+           bg-white/80 backdrop-blur-sm dark:bg-gray-900/80;
   }
 }
 
-// navbar items
-.navbar {
-  @apply relative flex flex-wrap items-center justify-between;
+/* === PANTALLAS <= LG === */
+@media (max-width: 1279px) {
+  /* navbar sin scroll → transparente */
+  .navbar {
+    @apply bg-transparent border-transparent;
+  }
+
+  /* navbar con scroll → opaco y blur */
+  .header-sticky .navbar {
+    @apply bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm border-transparent;
+  }
+
+  /* sin movimiento */
+  .logo-container,
+  .menu-container {
+    @apply translate-x-0;
+  }
 }
+
+
+
+
 
 .navbar-brand {
   @apply text-xl font-semibold text-dark;

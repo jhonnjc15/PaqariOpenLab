@@ -17,11 +17,25 @@ const { title, button, image, content } = banner;
         </p>
         {
           button.enable && (
-            <a class="btn btn-white mt-8" href={button.link}>
-              {button.label}
-            </a>
+            //<a class="btn btn-white mt-8" href={button.link}>
+            //  {button.label}
+            //</a>
+            <button class="relative inline-flex items-center justify-center p-[1.5px] overflow-hidden text-sm font-medium rounded-lg group focus:outline-none">
+              <!-- Borde giratorio que se detiene en hover -->
+              <span class="absolute inset-0 rounded-lg bg-[conic-gradient(from_0deg,#217276,#f3a415,#217276)] [animation:spin_6s_linear_infinite] group-hover:[animation:none] transition-all duration-500"></span>
+
+              <!-- Contenido del botón -->
+              <span
+                class="relative z-10 px-5 py-2.5 bg-white dark:bg-gray-900 text-gray-900 dark:text-white rounded-md 
+                      transition-all duration-500
+                      group-hover:bg-gradient-to-br group-hover:from-[#217276] group-hover:to-[#f3a415]
+                      group-hover:text-white dark:group-hover:text-gray-900">
+                Contáctanos
+              </span>
+            </button>
           )
         }
+
       </div>
       <div class="lg:col-6">
         <Image
