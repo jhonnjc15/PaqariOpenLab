@@ -191,5 +191,59 @@ const i18n = getI18N({ currentLocale })
     <ContactButton 
       i18n={i18n}
       client:load/>
+    
+    <script>
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const type = entry.target.dataset.animate;
+
+            // 🔹 Quita las clases iniciales de invisibilidad y desplazamiento
+            entry.target.classList.remove('opacity-0', 'translate-y-20', 'translate-x-20', 'scale-95');
+
+            // 🔹 Aplica clases finales (posición natural + visible)
+            switch (type) {
+              case 'fade-up':
+                entry.target.classList.add('opacity-100', 'translate-y-0');
+                break;
+              case 'fade-right':
+                entry.target.classList.add('opacity-100', 'translate-x-0');
+                break;
+              case 'zoom-in':
+                entry.target.classList.add('opacity-100', 'scale-100');
+                break;
+            }
+
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15 });
+
+      document.querySelectorAll('[data-animate]').forEach(el => {
+        const type = el.dataset.animate;
+
+        // 🔹 Estado inicial: invisible y desplazado *desde* su posición final
+        const baseClasses = [
+          'opacity-0',
+          'transition-all',
+          'duration-[1200ms]', // ← tiempo (ajusta libremente)
+          'ease-[cubic-bezier(0.25,0.1,0.25,1)]', // ← suavidad natural
+        ];
+
+        // 🔹 Diferente dirección inicial según el tipo de animación
+        if (type === 'fade-up') baseClasses.push('translate-y-20');
+        if (type === 'fade-right') baseClasses.push('translate-x-20');
+        if (type === 'zoom-in') baseClasses.push('scale-95');
+
+        el.classList.add(...baseClasses);
+        observer.observe(el);
+      });
+
+    document.addEventListener("astro:after-swap", () => {
+    document.querySelectorAll('[data-animate]').forEach(el => observer.observe(el));
+      });
+
+    </script>
+
   </body>
 </html>
