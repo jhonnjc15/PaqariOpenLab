@@ -4,7 +4,7 @@ banner:
   content: "Una suite completamente integrada de productos de autenticación y autorización, la plataforma de Stytch elimina el dolor de cabeza de."
   image: /images/banner-img.png
   button:
-    label: Descargar el Tema
+    label: More Information
     link: "/"
     enable: true
 

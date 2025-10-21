@@ -2,8 +2,8 @@
 title: "About"
 page_title: "About Our Company"
 buttons:
-  - label: Download The Theme
-    link: "https://themefisher.com/astro-themes/pinwheel-astro"
+  - label: More Information
+    link: "/"
     enable: true
   - label: Learn More
     link: "#"
@@ -41,8 +41,8 @@ gallery:
 features:
   title: The six core pillars that drive everything we do
   button:
-    label: Download The Theme
-    link: "https://themefisher.com/astro-themes/pinwheel-astro"
+    label: More Information
+    link: "/"
     enable: true
   features_list:
     - title: Accessibility

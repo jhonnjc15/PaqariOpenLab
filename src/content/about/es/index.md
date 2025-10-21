@@ -2,8 +2,8 @@
 title: "Nosotros"
 page_title: "Sobre nuestra empresa"
 buttons:
-  - label: Descargar el Tema
-    link: "https://themefisher.com/astro-themes/pinwheel-astro"
+  - label: Más información
+    link: "/"
     enable: true
   - label: Aprende Más
     link: "#"
@@ -41,8 +41,8 @@ gallery:
 features:
   title: Los seis pilares fundamentales que impulsan todo lo que hacemos
   button:
-    label: Descargar el Tema
-    link: "https://themefisher.com/astro-themes/pinwheel-astro"
+    label: Mas información
+    link: "/"
     enable: true
   features_list:
     - title: Accesibilidad

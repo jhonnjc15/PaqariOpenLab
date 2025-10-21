@@ -18,7 +18,7 @@ input#nav-toggle:checked ~ #nav-menu {
 
 /* NAVBAR BASE */
 .navbar {
-  @apply relative flex flex-wrap items-center justify-between bg-transparent py-2;
+  @apply relative flex flex-wrap items-center justify-between bg-transparent py-2 transition-colors duration-500 ease-in-out;
 }
 
 /* === EFECTOS DE MOVIMIENTO SOLO EN PANTALLAS XL Y SUPERIORES === */
@@ -58,10 +58,6 @@ input#nav-toggle:checked ~ #nav-menu {
   }
 }
 
-
-
-
-
 .navbar-brand {
   @apply text-xl font-semibold text-dark;
   image {
@@ -90,7 +86,7 @@ input#nav-toggle:checked ~ #nav-menu {
 }
 
 .nav-dropdown-list {
-  @apply z-10  ml-1 my-2 rounded-lg border-0 border-solid  border-primary bg-offset px-4 py-3  shadow-sm duration-300  lg:mt-0 lg:border lg:bg-white lg:shadow-[0_0.9rem_1.56rem_rgb(0,0,0,0.1)];
+  @apply z-10  ml-1 my-2 rounded-lg border-0 border-solid  border-primary bg-default px-4 py-3  shadow-sm duration-300  lg:mt-0 lg:border lg:bg-white lg:shadow-[0_0.9rem_1.56rem_rgb(0,0,0,0.1)];
 }
 
 .nav-dropdown-item {
@@ -98,5 +94,5 @@ input#nav-toggle:checked ~ #nav-menu {
 }
 
 .nav-dropdown-link {
-  @apply min-w-[150px] py-1 text-sm font-medium text-dark transition hover:text-primary;
+  @apply min-w-[150px] py-1 text-sm xl:text-dark font-medium transition hover:text-primary;
 }
