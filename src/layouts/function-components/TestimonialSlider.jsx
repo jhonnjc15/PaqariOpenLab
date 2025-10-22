@@ -24,7 +24,7 @@ const TestimonialSlider = ({ list }) => {
         onSwiper={(swiper) => {
           setSwiper(swiper);
         }}
-        // loop={true}
+        //loop={true}
         modules={[Pagination, Autoplay]}
         slidesPerView={1}
         breakpoints={{
@@ -38,7 +38,7 @@ const TestimonialSlider = ({ list }) => {
       >
         {list.map((item, i) => (
           <SwiperSlide key={"feature-" + i}>
-            <div className="review text-text">
+            <div className="border border-black review text-text">
               <div className="review-author-avatar bg-gradient">
                 <img src={item.avatar} alt="" />
               </div>

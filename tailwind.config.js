@@ -65,6 +65,7 @@ module.exports = {
       },
       borderColor: {
         default: "var(--color-border)",
+        offset: "var(--color-border-offset)",
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(rgb(33, 114, 118), rgb(12, 35, 36))',

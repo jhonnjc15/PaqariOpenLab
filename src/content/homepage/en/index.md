@@ -108,4 +108,26 @@ testimonial:
       organization: meta limited
       rating: three
       content: A complete shift in how we manage user access and security.
+
+galery:
+  title: Galery
+  description: Discover how we help real businesses deliver secure, scalable, and effective digital experiences.
+  galery_list:
+    - name: David Cameron
+      image: "/images/galery/imagen-1.jpg"
+    - name: David Cameron
+      image: "/images/galery/imagen-2.jpg"
+    - name: David Cameron
+      image: "/images/galery/imagen-3.jpg"
+    - name: David Cameron
+      image: "/images/galery/imagen-4.jpg"
+    - name: David Cameron
+      image: "/images/galery/imagen-5.jpg"
+    - name: David Cameron
+      image: "/images/galery/imagen-6.png"
+    - name: David Cameron
+      image: "/images/galery/imagen-7.jpg"
+    - name: David Cameron
+      image: "/images/galery/imagen-8.jpg"
 ---
+

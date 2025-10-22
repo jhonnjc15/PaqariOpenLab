@@ -128,4 +128,26 @@ testimonial:
       organization: meta limited
       rating: cinco
       content: Nuestra plataforma ayuda a construir experiencias de autenticación seguras y compromete a tus usuarios. Nosotros construimos.
+
+galery:
+  title: Galeria
+  description: Discover how we help real businesses deliver secure, scalable, and effective digital experiences.
+  galery_list:
+    - name: David Cameron
+      image: "/images/galery/imagen-1.jpg"
+    - name: David Cameron
+      image: "/images/galery/imagen-2.jpg"
+    - name: David Cameron
+      image: "/images/galery/imagen-3.jpg"
+    - name: David Cameron
+      image: "/images/galery/imagen-4.jpg"
+    - name: David Cameron
+      image: "/images/galery/imagen-5.jpg"
+    - name: David Cameron
+      image: "/images/galery/imagen-6.png"
+    - name: David Cameron
+      image: "/images/galery/imagen-7.jpg"
+    - name: David Cameron
+      image: "/images/galery/imagen-8.jpg"
 ---
+

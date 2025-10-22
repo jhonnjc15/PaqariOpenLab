@@ -306,6 +306,11 @@ select:invalid {
   }
 }
 
+//galery
+.galery {
+  @apply h-full my-16 bg-white text-center shadow;
+}
+
 //review-carousel
 .review {
   @apply mx-[0.9rem] my-16 rounded-xl bg-white px-3 py-6 pb-16 text-center shadow;
@@ -370,6 +375,17 @@ select:invalid {
 .reviews-carousel {
   .swiper-pagination-bullet {
     @apply h-3.5 w-3.5 bg-[#8d8d8d];
+
+    &-active {
+      @apply bg-primary;
+    }
+  }
+}
+
+//pagination style galery
+.reviews-carousel-galery {
+  .swiper-pagination-bullet {
+    @apply h-5 w-5 bg-[#8d8d8d];
 
     &-active {
       @apply bg-primary;

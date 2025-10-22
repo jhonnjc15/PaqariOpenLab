@@ -20,7 +20,9 @@
     --color-background: #f2fbfa;
     --color-background-offset: #75d3d1;
     --color-border: #217276;
+    --color-border-offset: #0b2528;
   }
+
 }
 
 .dark {
@@ -31,8 +33,51 @@
   --color-background: #0b2528;
   --color-background-offset: #1e4d51;
   --color-border: #f3a415;
+  --color-border-offset: #f2fbfa;
 }
 
+
+/* 👇 Agrega esto al final del archivo */
+/* ======================================================
+   Tailwind: Estilo de botones Swiper (transparentes + hover)
+   ====================================================== */
+@layer components {
+  /* Estado base: transparentes, redondos, sutiles */
+  .reviews-carousel :is(.swiper-button-prev, .swiper-button-next) {
+    @apply rounded-full w-16 h-16 flex items-center justify-center
+           transition duration-300 opacity-40 
+           backdrop-blur-sm z-10 bg-gray-100;
+    color: var(--color-primary); /* color del ícono */
+  }
+
+  /* Hover: fondo primario sólido, icono secundario, sombra */
+  .reviews-carousel :is(.swiper-button-prev:hover, .swiper-button-next:hover) {
+    @apply shadow-md opacity-100 bg-gray-200;
+    color: var(--color-primary);
+  }
+
+  /* Mostrar al pasar el mouse por el carrusel (opcional: “reveal on hover”) */
+  .reviews-carousel :is(.swiper-button-prev, .swiper-button-next) {
+    @apply opacity-0; /* oculto por defecto */
+  }
+  .reviews-carousel:hover :is(.swiper-button-prev, .swiper-button-next) {
+    @apply opacity-60; /* aparece suave */
+  }
+  .reviews-carousel:hover :is(.swiper-button-prev:hover, .swiper-button-next:hover) {
+    @apply opacity-100; /* 100% al hover del botón */
+  }
+
+  /* Separación de los bordes (más margen lateral) */
+  //.reviews-carousel .swiper-button-prev { @apply left-3 md:left-5; }
+  //.reviews-carousel .swiper-button-next { @apply right-3 md:right-5; }
+
+  /* Tamaño del símbolo ‹ › de los botones */
+  .reviews-carousel .swiper-button-prev::after,
+  .reviews-carousel .swiper-button-next::after {
+    font-size: 32px;
+    font-weight: 700;
+  }
+}
 
 /*
 @tailwind base;

@@ -239,8 +239,8 @@ const i18n = getI18N({ currentLocale })
         observer.observe(el);
       });
 
-    document.addEventListener("astro:after-swap", () => {
-    document.querySelectorAll('[data-animate]').forEach(el => observer.observe(el));
+      document.addEventListener("astro:after-swap", () => {
+      document.querySelectorAll('[data-animate]').forEach(el => observer.observe(el));
       });
 
     </script>
