@@ -15,27 +15,66 @@
   :root {
     --color-primary: #217276;
     --color-secondary: #f3a415;
+
+    --color-primary-alt: #1b5c60;        /* nuevo: primario más oscuro (hover/botón alt) */
+    --color-secondary-alt: #f5b93a;      /* nuevo: secundario más claro o hover */
+
     --color-text: theme("colors.gray.900");
     --color-text-offset: theme("colors.gray.600");
+    --color-text-muted: theme("colors.gray.500"); /* nuevo: texto desactivado o menos importante */
+    --color-text-inverted: #ffffff;               /* nuevo: texto sobre fondo oscuro */
+
     --color-background: #f2fbfa;
     --color-background-offset: #75d3d1;
+    --color-background-soft: #e6f6f4;    /* nuevo: fondo muy suave (tarjetas) */
+
     --color-border: #217276;
     --color-border-offset: #0b2528;
+    --color-border-soft: #c5e0de;        /* nuevo: bordes claros o divisores suaves */
+    --color-border-strong: #145356;      /* nuevo: bordes intensos */
+
+    --color-error: #b13535;              /* nuevo: errores o alertas */
+    --color-on-error: #ffffff;           /* nuevo: texto sobre error */
+
+    /* === Overlay (sombra semitransparente sobre botones/fondos eng/esp y change languaje) === */
+    --color-overlay: rgba(0, 0, 0, 0.3);        /* igual a bg-black/30 */
+    --color-overlay-hover: rgba(0, 0, 0, 0.7);  /* igual a hover:bg-black/70 */
+
   }
 
-}
+  /* ====================================
+     🌚 DARK THEME
+     ==================================== */
+  .dark {
+    --color-primary: #f3a415;
+    --color-secondary: #217276;
 
-.dark {
-  --color-primary: #f3a415;
-  --color-secondary: #217276;
-  --color-text: theme("colors.gray.50");
-  --color-text-offset: theme("colors.gray.400");
-  --color-background: #0b2528;
-  --color-background-offset: #1e4d51;
-  --color-border: #f3a415;
-  --color-border-offset: #f2fbfa;
-}
+    --color-primary-alt: #f5b93a;       /* hover más claro */
+    --color-secondary-alt: #2ba0a5;     /* variante clara del verde */
 
+    --color-text: theme("colors.gray.50");
+    --color-text-offset: theme("colors.gray.400");
+    --color-text-muted: theme("colors.gray.500"); /* texto atenuado en dark */
+    --color-text-inverted: #000000;               /* texto sobre fondos claros */
+
+    --color-background: #0f1414;//#0b2528;
+    --color-background-offset: #1e4d51;
+    --color-background-soft: #153739;   /* nuevo: tarjetas sobre fondo oscuro */
+
+    --color-border: #f3a415;
+    --color-border-offset: #f2fbfa;
+    --color-border-soft: #34575a;       /* nuevo: divisores sutiles */
+    --color-border-strong: #f3a415;     /* borde acentuado (igual que primario) */
+
+    --color-error: #ffb4ab;
+    --color-on-error: #690005;
+
+    /* === Overlay para modo oscuro === */
+    --color-overlay: rgba(255, 255, 255, 0.15);       /* sombra clara sutil */
+    --color-overlay-hover: rgba(255, 255, 255, 0.35); /* más fuerte al hover */
+
+  }
+}
 
 /* 👇 Agrega esto al final del archivo */
 /* ======================================================

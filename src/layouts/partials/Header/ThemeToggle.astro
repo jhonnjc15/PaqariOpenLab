@@ -14,7 +14,7 @@ const { class: extraClass = "" } = Astro.props;
 ---
 
 <button
-  class={`outline-none border-2 border-offset bg-default flex relative text-heading-2 rounded-full m-2 p-1 lg:p-2 transition-colors duration-300 ${extraClass}`}
+  class={`outline-none bg-overlay hover:bg-overlay_hover transition-all flex relative text-white text-heading-2 rounded-full m-2 p-2 transition-colors duration-300 ${extraClass}`}
   aria-label="Toggle color scheme"
   aria-pressed="false"
   data-theme-toggle

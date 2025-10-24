@@ -46,20 +46,20 @@ function isActive(pathname: string, baseUrl: string, locale: string) {
 
 <header  class="header">
   <nav
-  class="navbar container rounded-md lg:rounded-full border-transparent transition-all duration-[600ms] ease-[cubic-bezier(0.4,0,0.2,1)]"
->
-  <!-- LOGO -->
-  <div
-    class="order-0 transition-transform duration-[600ms] ease-[cubic-bezier(0.4,0,0.2,1)] logo-container"
+    class="border border-transparent navbar container rounded-md lg:rounded-full transition-all duration-[600ms] ease-[cubic-bezier(0.4,0,0.2,1)]"
   >
-    <Logo />
-  </div>
+    <!-- LOGO -->
+    <div
+      class="order-0 transition-transform duration-[600ms] ease-[cubic-bezier(0.4,0,0.2,1)] logo-container"
+    >
+      <Logo />
+    </div>
     <!-- navbar toggler -->
     <input id="nav-toggle" type="checkbox" class="hidden" />
     <label
       id="show-button"
       for="nav-toggle"
-      class="order-2 flex cursor-pointer items-center lg:order-1 lg:hidden dark:text-black"
+      class="order-2 flex cursor-pointer items-center lg:order-1 lg:hidden"
     >
       <svg class="h-6 fill-current" viewBox="0 0 20 20">
         <title>Menu Open</title>
@@ -69,7 +69,7 @@ function isActive(pathname: string, baseUrl: string, locale: string) {
     <label
       id="hide-button"
       for="nav-toggle"
-      class="order-2 hidden cursor-pointer items-center lg:order-1 dark:text-black"
+      class="order-2 hidden cursor-pointer items-center lg:order-1"
     >
       <svg class="h-6 fill-current" viewBox="0 0 20 20">
         <title>Menu Close</title>
@@ -184,10 +184,10 @@ Conoce más sobre nuestros <span class="text-gray-400">INCREIBLES PRODUCTOS</spa
     </ul>
     <!-- LanguageSelector and DarkMode button Full page-->
     <div
-    class="order-1 ml-auto hidden items-center md:order-2 md:ml-0 lg:flex transition-transform duration-[600ms] ease-[cubic-bezier(0.4,0,0.2,1)] menu-container"
-  >
-      {!Astro.props.is404 && (
-          <LanguageSelector />
+      class="order-1 ml-auto hidden items-center md:order-2 md:ml-0 lg:flex transition-transform duration-[600ms] ease-[cubic-bezier(0.4,0,0.2,1)] menu-container"
+    >
+        {!Astro.props.is404 && (
+            <LanguageSelector />
         )}
         <ThemeToggle />
     </div>

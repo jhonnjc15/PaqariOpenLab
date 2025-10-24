@@ -3,84 +3,148 @@ import config from "@config/config.json";
 import { getRelativeLocaleUrl } from "astro:i18n";
 import { plainify } from "@lib/utils/textConverter";
 const { summary_length } = config.settings;
-import categoriesES from '@data/es/categories.json';
-import categoriesEN from '@data/en/categories.json';
+import categoriesES from "@data/es/categories.json";
+import categoriesEN from "@data/en/categories.json";
 
-const { currentLocale } = Astro
-const fallbackLocale = 'es';
+const { currentLocale } = Astro;
+const fallbackLocale = "es";
 
 // Selecciona productos según el idioma
-const categories_data = currentLocale === 'en' ? categoriesES : categoriesEN;
-
-
+const categories_data = currentLocale === "en" ? categoriesES : categoriesEN;
 ---
 
+<style>
+  /* 👇 Breakpoint personalizado: menos de 400px → una sola columna */
+  @media (max-width: 400px) {
+    .custom-grid {
+      grid-template-columns: 1fr !important;
+    }
+  }
 
-<div data-animate="zoom-in" class="max-w-7xl mx-auto px-6 md:px-12 xl:px-6">
-    <div
-    class="my-8 bg-offset grid divide-x divide-y divide-gray-200 lg:divide-none overflow-hidden rounded-3xl sm:grid-cols-2 lg:grid-cols-4 lg:divide-y-0 xl:grid-cols-4"
-    >
+  /* 👇 Hover limpio sin alterar bordes ni mover el layout */
+  .card {
+    position: relative;
+    transition: all 0.3s ease;
+  }
+
+  .card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border: 3px solid transparent;
+    border-radius: 1.5rem; /* similar a rounded-3xl */
+    pointer-events: none;
+    transition: all 0.3s ease;
+  }
+
+  .card:hover::after {
+    border-color: var(--color-secondary);
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.15);
+  }
+</style>
+
+<div data-animate="zoom-in" class="max-w-7xl mx-auto px-3 sm:px-5 md:px-8 xl:px-6">
+  <div
+    class="custom-grid grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 
+           rounded-3xl overflow-hidden
+           my-6 md:my-10 bg-offset"
+  >
     {categories_data?.map((data) => (
-    <div class="max-h-96 min-h-64 group relative transition hover:z-[1] hover:shadow-2xl hover:shadow-gray-600/10 ">
-      <div class="flex flex-col justify-between h-full relative space-y-8 py-12 p-8 hover:border-2 hover:border-secondary hover:rounded-3xl hover:shadow-2xl">
+      <div
+        class="card group relative 
+               min-h-[190px] sm:min-h-[220px] md:min-h-[240px] lg:min-h-[260px]
+               flex flex-col justify-between h-full
+               py-6 px-5 sm:py-8 sm:px-6 md:py-8 md:px-6
+               bg-offset transition duration-300"
+      >
         <img
           src={data.image_url}
-          class="w-12"
+          class="w-10 sm:w-12 md:w-12 mx-auto sm:mx-0"
           width="512"
           height="512"
-          alt="burger illustration"
+          alt={data.name}
         />
-
-        <div class="space-y-2">
+        <div class="space-y-2 sm:space-y-3 mt-4">
           <h5
-            class="text-xl font-semibold transition group-hover:text-secondary"
+            class="text-base sm:text-lg md:text-lg font-semibold transition group-hover:text-primary"
           >
             {data.name}
           </h5>
-          <p class="h-[70px] block font-sans text-sm group-hover:text-secondary antialiased font-normal leading-normal opacity-75 overflow-hidden">
-            {plainify(data.short_description?.slice(0, Number(summary_length)))}
-            {data.short_description?.length > summary_length ? '...' : ''}
-          </p>
-        </div>
-        <a 
-          href={getRelativeLocaleUrl(currentLocale ?? '',`${data.url}`)}
-          class="flex items-center justify-between group-hover:text-secondary">
-          
-          <span class="text-sm">Read more</span>
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 -translate-x-4 text-2xl opacity-0 transition duration-300 group-hover:translate-x-0 group-hover:opacity-100">
-            <path fill-rule="evenodd" d="M12.97 3.97a.75.75 0 011.06 0l7.5 7.5a.75.75 0 010 1.06l-7.5 7.5a.75.75 0 11-1.06-1.06l6.22-6.22H3a.75.75 0 010-1.5h16.19l-6.22-6.22a.75.75 0 010-1.06z" clip-rule="evenodd" />
-          </svg>                
-        </a>
-      </div>
-    </div>
-    ))}
-    <div class="max-h-96 min-h-64 group relative transition hover:z-[1] hover:shadow-2xl hover:shadow-gray-600/10  ">
-      <div class="flex flex-col justify-between h-full relative space-y-8 py-12 p-8 transition-transform duration-300 group-hover:bg-white hover:border-2 hover:border-secondary hover:rounded-3xl hover:shadow-2xl">
-        <img
-          src="https://cdn-icons-png.flaticon.com/512/4341/4341025.png"
-          class="w-12"
-          width="512"
-          height="512"
-          alt="burger illustration"
-        />
-
-        <div class="space-y-2">
-          <h5
-            class="text-xl font-semibold transition-transform group-hover:text-secondary"
+          <p
+            class="block font-sans text-xs sm:text-sm md:text-sm leading-snug opacity-75 overflow-hidden group-hover:text-primary"
           >
-            More features
-          </h5>
-          <p class="h-[70px] group-hover:text-secondary overflow-hidden ">
-            Neque Dolor, fugiat non cum doloribus aperiam.
+            {plainify(data.short_description?.slice(0, Number(summary_length)))}
+            {data.short_description?.length > summary_length ? "..." : ""}
           </p>
         </div>
-        <a href="#" class="flex items-center justify-between group-hover:text-secondary">
-          <span class="text-sm">Read more</span>
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 -translate-x-4 text-2xl opacity-0 transition duration-300 group-hover:translate-x-0 group-hover:opacity-100">
-            <path fill-rule="evenodd" d="M12.97 3.97a.75.75 0 011.06 0l7.5 7.5a.75.75 0 010 1.06l-7.5 7.5a.75.75 0 11-1.06-1.06l6.22-6.22H3a.75.75 0 010-1.5h16.19l-6.22-6.22a.75.75 0 010-1.06z" clip-rule="evenodd" />
-          </svg>                
+        <a
+          href={getRelativeLocaleUrl(currentLocale ?? "", `${data.url}`)}
+          class="flex items-center justify-between text-xs sm:text-sm md:text-sm group-hover:text-primary mt-4"
+        >
+          <span>Read more</span>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            class="w-4 h-4 sm:w-5 sm:h-5 -translate-x-3 opacity-0 transition duration-300 group-hover:translate-x-0 group-hover:opacity-100"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M12.97 3.97a.75.75 0 011.06 0l7.5 7.5a.75.75 0 010 1.06l-7.5 7.5a.75.75 0 11-1.06-1.06l6.22-6.22H3a.75.75 0 010-1.5h16.19l-6.22-6.22a.75.75 0 010-1.06z"
+              clip-rule="evenodd"
+            />
+          </svg>
         </a>
       </div>
-    </div>
+    ))}
+
+    <!-- Bloque extra -->
+    <div
+      class="card group relative 
+             min-h-[190px] sm:min-h-[220px] md:min-h-[240px] lg:min-h-[260px]
+             flex flex-col justify-between h-full
+             py-6 px-5 sm:py-8 sm:px-6 md:py-8 md:px-6
+             bg-offset transition duration-300"
+    >
+      <img
+        src="https://cdn-icons-png.flaticon.com/512/4341/4341025.png"
+        class="w-10 sm:w-12 md:w-12 mx-auto sm:mx-0"
+        width="512"
+        height="512"
+        alt="More features icon"
+      />
+
+      <div class="space-y-2 sm:space-y-3 mt-4">
+        <h5
+          class="text-base sm:text-lg md:text-lg font-semibold transition group-hover:text-primary"
+        >
+          More features
+        </h5>
+        <p
+          class="block font-sans text-xs sm:text-sm md:text-sm leading-snug overflow-hidden group-hover:text-primary"
+        >
+          Neque Dolor, fugiat non cum doloribus aperiam.
+        </p>
+      </div>
+
+      <a
+        href="#"
+        class="flex items-center justify-between text-xs sm:text-sm md:text-sm group-hover:text-primary mt-4"
+      >
+        <span>Read more</span>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          class="w-4 h-4 sm:w-5 sm:h-5 -translate-x-3 opacity-0 transition duration-300 group-hover:translate-x-0 group-hover:opacity-100"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M12.97 3.97a.75.75 0 011.06 0l7.5 7.5a.75.75 0 010 1.06l-7.5 7.5a.75.75 0 11-1.06-1.06l6.22-6.22H3a.75.75 0 010-1.5h16.19l-6.22-6.22a.75.75 0 010-1.06z"
+            clip-rule="evenodd"
+          />
+        </svg>
+      </a>
     </div>
   </div>
+</div>

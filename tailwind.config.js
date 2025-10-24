@@ -1,3 +1,4 @@
+// tailwind.config.js
 const theme = require("./src/config/theme.json");
 
 let font_base = Number(theme.fonts.font_size.base.replace("px", ""));
@@ -43,36 +44,59 @@ module.exports = {
         text: theme.colors.default.text_color.default,
         light: theme.colors.default.text_color.light,
         dark: theme.colors.default.text_color.dark,
+
         primary: "var(--color-primary)",
         secondary: "var(--color-secondary)",
+
         body: theme.colors.default.theme_color.body,
         border: theme.colors.default.theme_color.border,
         "theme-light": theme.colors.default.theme_color.theme_light,
         "theme-dark": theme.colors.default.theme_color.theme_dark,
-        paqariGreen: '#217276',
-        paqariGreenDark: '#0c2324',
-        paqariYellow: '#f3a415',
-        paqariYellowHover: '#f3b815',
+
+        /* === Nuevas referencias === */
+        "primary-alt": "var(--color-primary-alt)",
+        "secondary-alt": "var(--color-secondary-alt)",
+        error: "var(--color-error)",
+        "on-error": "var(--color-on-error)",
+
+        paqariGreen: "#217276",
+        paqariGreenDark: "#0c2324",
+        paqariYellow: "#f3a415",
+        paqariYellowHover: "#f3b815",
+
       },
+
       textColor: {
         default: "var(--color-text)",
         offset: "var(--color-text-offset)",
+        muted: "var(--color-text-muted)",
+        inverted: "var(--color-text-inverted)",
         secondary: "var(--color-secondary)",
       },
+
       backgroundColor: {
         default: "var(--color-background)",
         offset: "var(--color-background-offset)",
+        soft: "var(--color-background-soft)",
+        overlay: "var(--color-overlay)",
+        overlay_hover: "var(--color-overlay-hover)"
       },
+
       borderColor: {
         default: "var(--color-border)",
         offset: "var(--color-border-offset)",
+        soft: "var(--color-border-soft)",
+        strong: "var(--color-border-strong)",
       },
-      backgroundImage: {
-        'gradient-radial': 'radial-gradient(rgb(33, 114, 118), rgb(12, 35, 36))',
-        'gradient-radial-contact': 'linear-gradient(180deg, rgba(33,114,118,1) 0%, rgba(12,35,36,1) 100%);',
-        'gradient-linear-contact2': ' linear-gradient(278deg, rgba(243,164,21,1) 0%, rgba(33,114,118,1) 100%)'
 
+      backgroundImage: {
+        "gradient-radial": "radial-gradient(rgb(33, 114, 118), rgb(12, 35, 36))",
+        "gradient-radial-contact":
+          "linear-gradient(180deg, rgba(33,114,118,1) 0%, rgba(12,35,36,1) 100%)",
+        "gradient-linear-contact2":
+          "linear-gradient(278deg, rgba(243,164,21,1) 0%, rgba(33,114,118,1) 100%)",
       },
+
       fontSize: {
         base: font_base + "px",
         h1: h1 + "rem",
@@ -85,6 +109,7 @@ module.exports = {
         h5: h5 + "rem",
         h6: h6 + "rem",
       },
+
       fontFamily: {
         primary: [fontPrimary, fontPrimaryType],
         secondary: [fontSecondary, fontSecondaryType],
@@ -92,7 +117,7 @@ module.exports = {
     },
   },
   plugins: [
-    require('flowbite/plugin'),
+    require("flowbite/plugin"),
     require("@tailwindcss/typography"),
     require("@tailwindcss/forms"),
     require("tailwind-bootstrap-grid")({ generateContainer: false }),
